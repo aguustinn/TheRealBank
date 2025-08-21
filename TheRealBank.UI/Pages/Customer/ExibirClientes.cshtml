@@ -1,0 +1,26 @@
+﻿@page
+@model TheRealBank.UI.Pages.Customer.ExibirClientesModel
+
+<h1>Lista de Clientes</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Email</th>
+            <th>Saldo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model.Clientes)
+        {
+            <tr>
+                <td>@cliente.Nome</td>
+                <td>@cliente.CPF</td>
+                <td>@cliente.Email</td>
+                <td>@cliente.Saldo.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
