@@ -13,7 +13,20 @@
 
     <style>
         /* Seus estilos CSS permanecem os mesmos */
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 20px; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px); /* deixa espaço pro header */
+        }
+
         .form-container { background-color: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
         h1 { color: #1c3d5a; text-align: center; margin-bottom: 30px; }
         .form-group { margin-bottom: 20px; }
@@ -24,7 +37,7 @@
         .submit-btn:hover { background-color: #0056b3; }
         .text-danger { color: #dc3545; font-size: 0.875em; }
     </style>
-</head>
+</head> 
 <body>
 
     <div class="form-container">
