@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.UI", "TheRealBank.UI\TheRealBank.UI.csproj", "{1D14DA2B-729F-4BCB-8823-515713110217}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.Services", "TheRealBank.Services\TheRealBank.Services.csproj", "{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1D14DA2B-729F-4BCB-8823-515713110217}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D14DA2B-729F-4BCB-8823-515713110217}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D14DA2B-729F-4BCB-8823-515713110217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

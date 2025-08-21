@@ -1,0 +1,114 @@
+﻿@page "{id}"
+@model TheRealBank.UI.Pages.Customer.MostrarClienteModel
+@{
+    ViewData["Title"] = "Detalhes do Cliente";
+}
+
+<style>
+    /* Estilos similares aos da página de cadastro para consistência */
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 20px;
+    }
+
+    .details-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #1c3d5a;
+        margin-bottom: 20px;
+    }
+
+    .success-message {
+        color: #28a745;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .data-grid {
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+    .data-row {
+        display: flex;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .data-label {
+        font-weight: 600;
+        color: #555;
+        flex: 0 0 150px;
+    }
+
+    .data-value {
+        color: #333;
+    }
+
+    .btn-back {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="details-container">
+    <h1>Cliente Cadastrado!</h1>
+    <p class="success-message">🎉 Parabéns! Seus dados foram registrados com sucesso. 🎉</p>
+
+    @if (Model.Cliente != null)
+    {
+        <div class="data-grid">
+            <div class="data-row">
+                <span class="data-label">Nome Completo:</span>
+                <span class="data-value">@Model.Cliente.Nome</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">CPF:</span>
+                <span class="data-value">@Model.Cliente.CPF</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">E-mail:</span>
+                <span class="data-value">@Model.Cliente.Email</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Data de Nascimento:</span>
+                <span class="data-value">@Model.Cliente.DataNascimento.ToShortDateString()</span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Saldo Inicial:</span>
+                <span class="data-value">@Model.Cliente.Saldo.ToString("C")</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Não foi possível carregar os dados do cliente.</p>
+    }
+
+    <a asp-page="/Index" class="btn-back">Voltar para o Início</a>
+</div>
