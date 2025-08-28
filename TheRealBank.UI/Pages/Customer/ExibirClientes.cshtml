@@ -3,6 +3,10 @@
 
 <h1>Lista de Clientes</h1>
 
+<style>
+    body{background-color: silver}
+</style>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -20,6 +24,11 @@
                 <td>@cliente.CPF</td>
                 <td>@cliente.Email</td>
                 <td>@cliente.Saldo.ToString("C")</td>
+                <td>
+
+                    <a class="btn btn-primary" href="/Customer/Excluir_Cliente">Excluir</a>
+                    <a class="btn btn-primary" href="/Customer/EditarCliente">Editar</a>
+                </td>
             </tr>
         }
     </tbody>

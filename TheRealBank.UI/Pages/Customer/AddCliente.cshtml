@@ -1,7 +1,7 @@
 ﻿@page
 @model TheRealBank.UI.Pages.Customer.AddClienteModel
 @{
-    ViewData["Title"] = "Cadastro de Cliente"; // Alterei para um título mais descritivo
+    ViewData["Title"] = "Cadastro de Cliente";
 }
 
 <!DOCTYPE html>
@@ -12,76 +12,146 @@
     <title>@ViewData["Title"] - Sistema Bancário</title>
 
     <style>
-        /* Seus estilos CSS permanecem os mesmos */
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f0f2f5;
+            background-color: silver;
             margin: 0;
-            padding: 20px;
-          
+            padding: 0px;
         }
 
         .main-content {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 80px); /* deixa espaço pro header */
-            
+            min-height: calc(100vh - 120px);
         }
 
+        .form-container {
+            background-color: #fff;
+            margin: auto;
+            margin-bottom: 60px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
 
-        .form-container { background-color: #fff;margin-left: 370px; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h1 { color: #1c3d5a; text-align: center; margin-bottom: 30px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; }
-        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 16px; transition: border-color 0.3s; }
-        input:focus { border-color: #007bff; outline: none; }
-        .submit-btn { width: 100%; padding: 15px; background-color: #007bff; border: none; border-radius: 5px; color: white; font-size: 18px; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
-        .submit-btn:hover { background-color: #0056b3; }
-        .text-danger { color: #dc3545; font-size: 0.875em; }
+        h1 {
+            color: #1c3d5a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+            input:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .submit-btn:hover {
+                background-color: #0056b3;
+            }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.875em;
+        }
+
+        footer {
+            color: red;
+            text-align: center;
+            padding: 1px 0;
+            background: #f8f9fa;
+            margin-top: 20px;
+            width: 100%;
+            display: block;
+            position: relative;
+            left: 0;
+        }
+
     </style>
-</head> 
+</head>
 <body>
 
-    <div class="form-container">
-        <h1>Cadastro de Novo Cliente</h1>
+    <div class="main-content">
+        <div class="form-container">
+            <h1>Cadastro de Novo Cliente</h1>
 
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Cliente.Nome"></label>
-                <input asp-for="Cliente.Nome" class="form-control" placeholder="Digite o nome completo">
-                <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Cliente.Nome"></label>
+                    <input asp-for="Cliente.Nome" class="form-control" placeholder="Digite o nome completo">
+                    <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Cliente.CPF"></label>
-                <input asp-for="Cliente.CPF" class="form-control" placeholder="999.999.999-99">
-                <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Cliente.CPF"></label>
+                    <input asp-for="Cliente.CPF" class="form-control" placeholder="999.999.999-99">
+                    <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Cliente.Email"></label>
-                <input asp-for="Cliente.Email" class="form-control" type="email" placeholder="seu.email@exemplo.com">
-                <span asp-validation-for="Cliente.Email" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Cliente.Email"></label>
+                    <input asp-for="Cliente.Email" class="form-control" type="email" placeholder="seu.email@exemplo.com">
+                    <span asp-validation-for="Cliente.Email" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Cliente.DataNascimento"></label>
-                <input asp-for="Cliente.DataNascimento" class="form-control">
-                <span asp-validation-for="Cliente.DataNascimento" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Cliente.DataNascimento"></label>
+                    <input asp-for="Cliente.DataNascimento" class="form-control">
+                    <span asp-validation-for="Cliente.DataNascimento" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Cliente.Saldo"></label>
-                <input asp-for="Cliente.Saldo" class="form-control" type="number" step="0.01" placeholder="R$ 100,00">
-                <span asp-validation-for="Cliente.Saldo" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Cliente.Saldo"></label>
+                    <input asp-for="Cliente.Saldo" class="form-control" type="number" step="0.01" placeholder="R$ 100,00">
+                    <span asp-validation-for="Cliente.Saldo" class="text-danger"></span>
+                </div>
 
-            <button type="submit" class="submit-btn">Cadastrar Cliente</button>
-        </form>
+                <button type="submit" class="submit-btn">Cadastrar Cliente</button>
+            </form>
+        </div>
     </div>
+
+    <footer>
+        © 2025 - TheRealBank.UI - <a href="#">Privacy</a>
+    </footer>
 
 </body>
 </html>
