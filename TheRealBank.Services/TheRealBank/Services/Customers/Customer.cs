@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Customers
+namespace TheRealBank.Services.Customers
 {
     public class Customer
     {

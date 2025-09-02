@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Customers
+namespace TheRealBank.Services.Customers
 {
     public interface ICustomerService
     {
@@ -12,5 +12,7 @@ namespace Customers
         Task<List<Customer>> GetCustomersAsync();
 
         Task<Customer> GetCustomerByCpfAsync(string cpf);
+        Task UpdateAsync(string cpf, Customer clienteAtualizado);
+        Task DeleteAsync(string cpf);
     }
 }

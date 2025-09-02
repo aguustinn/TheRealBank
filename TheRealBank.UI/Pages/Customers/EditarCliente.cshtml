@@ -1,0 +1,146 @@
+﻿@page "{CPF}"
+@model TheRealBank.UI.Pages.Customers.EditarClienteModel
+@{
+    ViewData["Title"] = "Editar Cliente";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Sistema Bancário</title>
+    <style>
+        /* Seus estilos CSS permanecem os mesmos */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px); /* deixa espaço pro header */
+        }
+
+
+        .form-container {
+            background-color: #fff;
+            margin-left: 370px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #1c3d5a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+            input:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .submit-btn:hover {
+                background-color: #0056b3;
+            }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="form-container">
+            <h3>EDITAR CLIENTE</h3>
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @* Adiciona um campo oculto para garantir que o CPF original seja enviado, se necessário,
+                   mas a rota já cuida disso. Isso é mais uma garantia. *@
+                <input type="hidden" asp-for="Cliente.CPF" />
+
+                <div class="form-group">
+                    <label asp-for="Cliente.Nome"></label>
+                    <input asp-for="Cliente.Nome" class="form-control" placeholder="Digite o nome completo">
+                    <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    @* O campo de CPF é geralmente mostrado, mas não editável *@
+                    <label asp-for="Cliente.CPF"></label>
+                    <input asp-for="Cliente.CPF" class="form-control" readonly>
+                    <span asp-validation-for="Cliente.CPF" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Cliente.Email"></label>
+                    <input asp-for="Cliente.Email" class="form-control" type="email" placeholder="seu.email@exemplo.com">
+                    <span asp-validation-for="Cliente.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Cliente.DataNascimento"></label>
+                    <input asp-for="Cliente.DataNascimento" class="form-control" type="date">
+                    <span asp-validation-for="Cliente.DataNascimento" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Cliente.Saldo"></label>
+                    <input asp-for="Cliente.Saldo" class="form-control" type="number" step="0.01" placeholder="R$ 100,00">
+                    <span asp-validation-for="Cliente.Saldo" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="submit-btn">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        © @DateTime.Now.Year - TheRealBank.UI
+    </footer>
+</body>
+</html>
