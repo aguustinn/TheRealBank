@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.UI", "TheRealBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.Services", "TheRealBank.Services\TheRealBank.Services.csproj", "{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.Repositories", "TheRealBank.Repositories\TheRealBank.Repositories.csproj", "{5FC36A91-0252-47F7-A924-38C586906326}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC36A91-0252-47F7-A924-38C586906326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC36A91-0252-47F7-A924-38C586906326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC36A91-0252-47F7-A924-38C586906326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC36A91-0252-47F7-A924-38C586906326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

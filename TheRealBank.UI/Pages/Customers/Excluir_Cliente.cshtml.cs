@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TheRealBank.UI.Pages.Customer
+namespace TheRealBank.UI.Pages.Customers
 {
-    public class editarclienteModel : PageModel
+    public class Excluir_ClienteModel : PageModel
     {
         public void OnGet()
         {
