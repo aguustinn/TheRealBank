@@ -1,5 +1,5 @@
 ﻿@page
-@model TheRealBank.UI.Pages.Customer.ExibirClientesModel
+@model TheRealBank.UI.Pages.Customers.ExibirClientesModel
 
 <h1>Lista de Clientes</h1>
 
@@ -26,8 +26,8 @@
                 <td>@cliente.Saldo.ToString("C")</td>
                 <td>
 
-                    <a class="btn btn-primary" href="/Customer/Excluir_Cliente">Excluir</a>
-                    <a class="btn btn-primary" href="/Customer/EditarCliente">Editar</a>
+                    <a class="btn btn-primary" href="/Customers/Excluir_Cliente">Excluir</a>
+                    <a class="btn btn-primary" href="/Customers/EditarCliente/@cliente.CPF">Editar</a>
                 </td>
             </tr>
         }

@@ -1,5 +1,9 @@
+
 using Microsoft.EntityFrameworkCore;
 using SeuProjeto.Data;
+
+using TheRealBank.Services.Customers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
