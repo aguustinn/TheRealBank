@@ -11,6 +11,11 @@
         padding: 0px;
     }
 
+    .display-4 {
+        font-size: 24px;
+        margin: auto;
+    }
+
     .main-container {
         text-align: center;
         background-color: white;
@@ -29,46 +34,83 @@
             margin-bottom: 15px;
         }
 
+    /* container dos botões */
     .action-buttons {
         display: flex;
         justify-content: center;
-        gap: 20px; /* Espaço entre os botões */
+        align-items: center;
+        gap: 16px;
+        margin-top: 20px;
     }
 
-        /* Remove margem do form para alinhar os botões */
         .action-buttons form {
-            margin: 0;
+            margin: 0; /* remove margem do form */
         }
 
-        /* Botões customizados */
-        .action-buttons .btn {
-            display: inline-block;
-            min-width: 80px; /* mesma largura */
-            padding: 14px 20px; /* mesma altura */
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            color: white !important; /* garante que o texto fique branco */
-            text-align: center;
+    /* estilo base idêntico para botão <button> e <a> */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 140px; /* largura fixa para ficar igual */
+        height: 48px; /* altura fixa para ficar igual */
+        padding: 0 16px; /* padding horizontal (altura já controlada) */
+        font-size: 18px;
+        font-weight: 700;
+        border-radius: 8px;
+        border: none;
+        box-sizing: border-box;
+        background-color: silver; /* cor padrão */
+        color: white;
+        text-decoration: none; /* remove underline do <a> */
+        cursor: pointer;
+        transition: transform 0.15s ease, background-color 0.15s ease;
+        line-height: normal;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+        /* hover: muda cor mas mantém tamanhos iguais */
+        .btn:hover {
+            transform: translateY(-2px);
+            color: white;
         }
 
-    .btn-success:hover,
-    .btn-danger:hover {
-        transform: translateY(-2px); /* Efeito de elevação */
+        /* foco personalizado (mantém acessibilidade) */
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+        }
+
+    /* cores específicas ao passar o mouse */
+    .btn-sim:hover {
+        background-color: #28a745; /* verde */
+    }
+
+    .btn-nao:hover {
+        background-color: #dc3545; /* vermelho */
+    }
+
+    /* garante que o <a> se comporte como o botão (sem gaps/linheights diferentes) */
+    .action-buttons > a.btn {
+        display: inline-flex;
     }
 </style>
 
-
 <div class="main-container">
-    <h1 class="display-4">Tem certeza que quer excluir o cliente @Model.Cliente.Nome (CPF: @Model.Cliente.CPF)?</h1>
+    <h1 class="display-4">Tem certeza que quer excluir o cliente @Model.Cliente.Nome</h1>
+    <br />
+    <h2 class="display-4">(CPF: @Model.Cliente.CPF)?</h2>
+
     <div class="action-buttons">
-        <form method="post">
+        <!-- Form separado contendo apenas o botão 'Sim' -->
+        <form method="post" aria-label="Confirmar exclusão">
             <input type="hidden" asp-for="Cliente.CPF" />
-            <!-- Botão SIM em verde -->
-            <button type="submit" class="btn btn-success">Sim</button>
+            <button type="submit" class="btn btn-sim">Sim</button>
         </form>
-        <!-- Botão NÃO em vermelho -->
-        <a class="btn btn-danger" asp-page="/Customers/ExibirClientes">Não</a>
+
+        <!-- Link 'Não' como botão visualmente idêntico -->
+        <a class="btn btn-nao" asp-page="/Customers/ExibirClientes" role="button">Não</a>
     </div>
 </div>
