@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace TheRealBank.Contexts
 {
@@ -12,11 +10,33 @@ namespace TheRealBank.Contexts
     {
         public MainContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<MainContext>();
+            var basePath = Directory.GetCurrentDirectory(); // StartupProject (UI)
+            var config = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddJsonFile("appsettings.Development.json", optional: true)
+                .Build();
 
-            optionsBuilder.UseSqlServer("Server=localhost;Database=FirstDataBase;User=sa;Password=1senha23");
+            var provider = config["Database:Provider"] ?? "SqlServer";
+            var connectionString = config.GetConnectionString("DefaultConnection")
+                                   ?? "Server=localhost;Database=FirstDataBase;User Id=sa;Password=1senha23;Encrypt=False;TrustServerCertificate=True";
 
-            return new MainContext(optionsBuilder.Options);
+            var options = new DbContextOptionsBuilder<MainContext>();
+
+            switch (provider)
+            {
+                case "SqlServer":
+                    options.UseSqlServer(connectionString);
+                    break;
+                case "MySql":
+                    var versionText = config["Database:MySqlVersion"] ?? "8.0.36-mysql";
+                    options.UseMySql(connectionString, ServerVersion.Parse(versionText));
+                    break;
+                default:
+                    throw new InvalidOperationException($"Provedor '{provider}' não suportado.");
+            }
+
+            return new MainContext(options.Options);
         }
     }
 }

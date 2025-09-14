@@ -1,19 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TheRealBank.Entities;
+using TheRealBank.Contexts.Base;
 
 namespace TheRealBank.Contexts
 {
-    public class MainContext : DbContext
+    public class MainContext : DbContextBase
     {
-        public MainContext(DbContextOptions<MainContext> options) : base(options)
-        {
-        }
+        public MainContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Customer> Contatos { get; set; }
+        public DbSet<Customer> Customers { get; set; } = default!;
     }
 }

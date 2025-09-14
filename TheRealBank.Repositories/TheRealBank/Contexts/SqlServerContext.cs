@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace TheRealBank.Contexts
 {
-    internal class SqlServerContext
+    public class SqlServerContext : MainContext
     {
+        private readonly IConfiguration configuration;
+
+        public SqlServerContext(DbContextOptions<SqlServerContext> options, IConfiguration configuration) : base(options)
+        {
+            this.configuration = configuration;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = configuration.GetConnectionString("DefaultConnection")
+                                       ?? configuration["ConnectionString"];
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
     }
 }

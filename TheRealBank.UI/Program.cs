@@ -1,21 +1,28 @@
-
 using Microsoft.EntityFrameworkCore;
 using SeuProjeto.Data;
-
-using TheRealBank.Services.Customers;
+using TheRealBank.Repositories;
+using TheRealBank.Services;
+using TheRealBank.Contexts;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Conexão MySQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Registra EF Core (MainContext) e Repositórios
+builder.Services.AddDesignerRepositories(builder.Configuration);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+// Registra serviços de aplicação
+builder.Services.AddApplicationServices();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+// Aplica migrações automaticamente (cria DB/tabelas se necessário)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MainContext>();
+    db.Database.Migrate();
+}
 
 if (!app.Environment.IsDevelopment())
 {
