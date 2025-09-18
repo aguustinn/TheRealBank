@@ -17,7 +17,7 @@ namespace TheRealBank.Contexts
                 .Build();
 
             var cs = config.GetConnectionString("DefaultConnection")
-                     ?? "server=localhost;port=3306;database=TheRealBank;user=root;password=SUASENHA;SslMode=None";
+                     ?? "server=localhost;port=3306;database=aaaa;user=root;password=admin";
             var versionText = config["Database:MySqlVersion"] ?? "8.0.36-mysql";
 
             var options = new DbContextOptionsBuilder<MySqlContext>()

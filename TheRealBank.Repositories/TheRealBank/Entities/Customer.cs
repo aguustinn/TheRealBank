@@ -1,25 +1,25 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using TheRealBank.Contexts.Base;
 
 namespace TheRealBank.Entities
 {
-    // Ensure unique CPF at database level
     [UniqueIndex(nameof(CPF))]
     public class Customer
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required, MaxLength(200)]
         public string Nome { get; set; } = default!;
 
-        [Required]
+        [Required, MaxLength(14)]
         public string CPF { get; set; } = default!;
 
-        [Required, EmailAddress]
+        [Required, EmailAddress, MaxLength(200)]
         public string Email { get; set; } = default!;
 
-        [Range(0, double.MaxValue)]
+        [Precision(18, 2)]
         public decimal Saldo { get; set; }
 
         [Required]

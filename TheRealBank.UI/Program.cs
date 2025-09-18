@@ -4,11 +4,10 @@ using TheRealBank.Repositories;
 using TheRealBank.Services;
 using TheRealBank.Contexts;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Registra EF Core (MainContext) e Repositórios
-builder.Services.AddDesignerRepositories(builder.Configuration);
+TheRealBank.Repositories.ExtensionMethods.AddDesignerRepositories(builder.Services, builder.Configuration);
 
 // Registra serviços de aplicação
 builder.Services.AddApplicationServices();
