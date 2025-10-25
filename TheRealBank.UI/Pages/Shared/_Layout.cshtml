@@ -3,61 +3,195 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TheRealBank.UI</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - TheRealBank</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TheRealBank.UI.styles.css" asp-append-version="true" />
 
-    <!-- Added: Google Fonts + Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
     <style>
+        /* --- Paleta de Cores Premium (Refinada) --- */
+        :root {
+            --bank-primary: #007bff; /* Azul de ação (para botões) */
+            --bank-accent: #C6A874; /* Ouro/Bronze para marca e destaques */
+            --bank-dark: #1a253c; /* Azul marinho escuro (Header/Footer) */
+            --body-bg: #f8f9fa; /* Cinza de fundo suave */
+            --text-light-on-dark: #adb5bd; /* Texto claro em fundos escuros */
+        }
+
         html, body {
             margin: 0;
             padding: 0;
+            height: 100%;
         }
 
-        /* Added: use Poppins globally */
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--body-bg);
+            display: flex;
+            flex-direction: column;
         }
 
         main {
+            flex-grow: 1;
             padding-bottom: 40px;
         }
 
-        footer {
-            background: #f8f9fa;
-            padding: 0.5px 0;
-            text-align: center;
-            margin-bottom: 0.5px;
+        /* --- Header / Navbar Premium (Dark) --- */
+        .navbar-custom {
+            background-color: var(--bank-dark) !important;
+            border-bottom: 3px solid var(--bank-accent);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        form {
-            margin-bottom: 50px;
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: white !important;
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--bank-accent);
+            margin-right: 10px;
+        }
+
+        /* Links da Navbar (em fundo escuro) */
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--text-light-on-dark) !important;
+            transition: all 0.2s ease-in-out;
+            border-bottom: 3px solid transparent;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+            letter-spacing: 0.3px;
+        }
+
+            .navbar-nav .nav-link:hover,
+            .navbar-nav .nav-link.active {
+                color: white !important;
+                border-bottom-color: var(--bank-accent);
+            }
+
+        /* Ícones da Navbar */
+        .nav-link i.fa-solid {
+            width: 20px;
+            text-align: center;
+            margin-right: 5px;
+            color: var(--text-light-on-dark);
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover i.fa-solid,
+        .nav-link.active i.fa-solid {
+            color: var(--bank-accent);
+        }
+
+        /* --- Footer (Sincronizado com o Header) --- */
+        .footer-custom {
+            background-color: var(--bank-dark);
+            color: #adb5bd;
+            padding: 50px 0 30px 0;
+            margin-top: auto;
+        }
+
+            .footer-custom h5 {
+                color: var(--bank-accent);
+                font-weight: 600;
+                margin-bottom: 20px;
+                letter-spacing: 0.5px;
+            }
+
+            .footer-custom p {
+                color: #adb5bd;
+                font-size: 0.9rem;
+            }
+
+            .footer-custom a {
+                color: #adb5bd;
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+
+                .footer-custom a:hover {
+                    color: white;
+                    text-decoration: underline;
+                }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+            .social-icons a:hover {
+                color: var(--bank-accent);
+            }
+
+        .footer-bottom {
+            border-top: 1px solid #34425A;
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">TheRealBank.UI</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <svg class="navbar-brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L2 6v2h20V6L12 1zM4 9v10H2v2h20v-2h-2V9H4zm3 0h2v9H7V9zm4 0h2v9h-2V9zm4 0h2v9h-2V9z" />
+                    </svg>
+                    TheRealBank
+                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">
+                                <i class="fa-solid fa-house"></i>Home
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link" asp-page="/Customers/ExibirClientes">
+                                <i class="fa-solid fa-users"></i>Ver Clientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Customers/AddCliente">
+                                <i class="fa-solid fa-user-plus"></i>Novo Cliente
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">
+                                <i class="fa-solid fa-shield-halved"></i>Privacidade
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -71,9 +205,41 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom">
         <div class="container">
-            &copy; 2025 - TheRealBank.UI - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase">TheRealBank</h5>
+                    <p>
+                        "A melhor do dinheiro."<br />
+                        Soluções financeiras digitais pensadas para você.
+                    </p>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a asp-page="/Index">Home</a></li>
+                        <li><a asp-page="/Customers/ExibirClientes">Clientes</a></li>
+                        <li><a asp-page="/Privacy">Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase">Siga-nos</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; @DateTime.Now.Year - TheRealBank - Todos os direitos reservados.
+            </div>
         </div>
     </footer>
 

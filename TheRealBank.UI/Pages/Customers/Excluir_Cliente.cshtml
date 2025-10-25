@@ -2,115 +2,162 @@
 @model TheRealBank.UI.Pages.Customers.Excluir_ClienteModel
 @{
     ViewData["Title"] = "Excluir Cliente";
+    Layout = "/Pages/Shared/_Layout.cshtml"; // CORRIGIDO: Aponta para o layout correto
 }
+
 <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: silver;
-        margin: 0;
-        padding: 0px;
-    }
-
-    .display-4 {
-        font-size: 24px;
-        margin: auto;
-    }
-
-    .main-container {
-        text-align: center;
-        background-color: white;
-        padding: 50px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        max-width: 800px;
-        width: 90%;
-        margin: auto;
-        margin-top: 125px;
-    }
-
-        .main-container h1 {
-            color: #1c3d5a;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-    /* container dos botões */
-    .action-buttons {
+    /* * Este CSS usa as variáveis de cor (ex: --bank-dark, --bank-accent)
+         * que estão definidas no seu _Layout.cshtml
+        */
+    .hero-section {
+        background: linear-gradient(135deg, #f2f7fa 0%, #ffffff 100%);
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 16px;
-        margin-top: 20px;
+        min-height: calc(100vh - 120px);
+        padding: 40px 0;
     }
 
-        .action-buttons form {
-            margin: 0; /* remove margem do form */
-        }
+    /* O card de confirmação */
+    .confirm-container {
+        text-align: center; /* Centraliza o conteúdo do card */
+        background-color: white;
+        padding: 40px 50px;
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        border: 1px solid #e0e8f0;
+        max-width: 600px;
+        width: 90%;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInSlideUp 0.8s ease-out forwards;
+    }
 
-    /* estilo base idêntico para botão <button> e <a> */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 140px; /* largura fixa para ficar igual */
-        height: 48px; /* altura fixa para ficar igual */
-        padding: 0 16px; /* padding horizontal (altura já controlada) */
-        font-size: 18px;
+    /* Animação de entrada */
+    @@keyframes fadeInSlideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .confirm-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    /* Ícone de Perigo (Vermelho) */
+    .confirm-icon {
+        font-size: 3rem;
+        color: #dc3545; /* Cor de Perigo (Vermelho) */
+        margin-bottom: 15px;
+    }
+
+    .confirm-header h1 {
+        color: var(--bank-dark); /* Cor Azul Escura do título */
         font-weight: 700;
+        font-size: 2.2em;
+        margin: 0;
+    }
+
+    .confirm-container p {
+        color: #556278;
+        font-size: 1.15em;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    /* Bloco para mostrar os dados do cliente */
+    .client-info {
+        background-color: #f8f9fa; /* Fundo cinza claro */
+        border: 1px solid #e9ecef;
         border-radius: 8px;
-        border: none;
-        box-sizing: border-box;
-        background-color: silver; /* cor padrão */
-        color: white;
-        text-decoration: none; /* remove underline do <a> */
-        cursor: pointer;
-        transition: transform 0.15s ease, background-color 0.15s ease;
-        line-height: normal;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: left;
     }
 
-        /* hover: muda cor mas mantém tamanhos iguais */
-        .btn:hover {
+        .client-info strong {
+            color: var(--bank-dark);
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .client-info span {
+            color: #556278;
+            font-size: 1.05em;
+        }
+
+    /* Botões de Ação */
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Espaço entre os botões */
+    }
+
+        .action-buttons .btn {
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 12px 30px;
+            border-radius: 8px;
+            min-width: 150px; /* Largura mínima para os botões */
+        }
+
+            .action-buttons .btn i {
+                margin-right: 8px;
+            }
+
+    /* Botão de Perigo (Excluir) */
+    .btn-danger {
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
             transform: translateY(-2px);
-            color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
         }
 
-        /* foco personalizado (mantém acessibilidade) */
-        .btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+    /* Botão de Cancelar */
+    .btn-outline-secondary {
+        border-width: 2px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-secondary:hover {
+            transform: translateY(-2px);
         }
 
-    /* cores específicas ao passar o mouse */
-    .btn-sim:hover {
-        background-color: #28a745; /* verde */
-    }
-
-    .btn-nao:hover {
-        background-color: #dc3545; /* vermelho */
-    }
-
-    /* garante que o <a> se comporte como o botão (sem gaps/linheights diferentes) */
-    .action-buttons > a.btn {
-        display: inline-flex;
-    }
 </style>
 
-<div class="main-container">
-    <h1 class="display-4">Tem certeza que quer excluir o cliente @Model.Cliente.Nome</h1>
-    <br />
-    <h2 class="display-4">(CPF: @Model.Cliente.CPF)?</h2>
+<div class="hero-section">
+    <div class="confirm-container">
 
-    <div class="action-buttons">
-        <!-- Form separado contendo apenas o botão 'Sim' -->
-        <form method="post" aria-label="Confirmar exclusão">
-            <input type="hidden" asp-for="Cliente.CPF" />
-            <button type="submit" class="btn btn-sim">Sim</button>
-        </form>
+        <div class="confirm-header">
+            <i class="fa-solid fa-triangle-exclamation confirm-icon"></i>
+            <h1>Confirmar Exclusão</h1>
+        </div>
 
-        <!-- Link 'Não' como botão visualmente idêntico -->
-        <a class="btn btn-nao" asp-page="/Customers/ExibirClientes" role="button">Não</a>
+        <p>Tem certeza que deseja excluir permanentemente o cliente abaixo? Esta ação não pode ser desfeita.</p>
+
+        <!-- Informações do cliente para confirmação -->
+        <div class="client-info">
+            <strong>@Model.Cliente.Nome</strong>
+            <span>CPF: @Model.Cliente.CPF</span>
+        </div>
+
+        <div class="action-buttons">
+            <!-- Botão "Não" (Cancelar) - Link de volta para a lista -->
+            <a class="btn btn-outline-secondary btn-lg" asp-page="/Customers/ExibirClientes">
+                <i class="fa-solid fa-xmark"></i> Não
+            </a>
+
+            <!-- Botão "Sim" (Confirmar) - Form para executar o Post -->
+            <form method="post" class="m-0">
+                <input type="hidden" asp-for="Cliente.CPF" />
+                <button type="submit" class="btn btn-danger btn-lg">
+                    <i class="fa-solid fa-trash-can"></i> Sim, Excluir
+                </button>
+            </form>
+        </div>
     </div>
 </div>
