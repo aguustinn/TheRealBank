@@ -2,91 +2,156 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Bem-vindo";
-    Layout = "_Layout";
+    Layout = "/Pages/Shared/_Layout.cshtml"; // Aponta para o layout correto na pasta Shared
 }
 
 <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background-color: silver;
-        margin: 0;
-        padding: 0px;
+    /* Estilos específicos para a página Index */
+    .hero-section {
+        /* Fundo gradiente sutil para um toque de sofisticação */
+        background: linear-gradient(135deg, #f2f7fa 0%, #ffffff 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 120px); /* Ajuste conforme a altura do seu header e footer */
+        padding: 40px 0;
     }
 
     .main-container {
         text-align: center;
         background-color: white;
-        padding: 50px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        padding: 60px 70px;
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        border: 1px solid #e0e8f0;
         max-width: 800px;
         width: 90%;
-        margin: auto;
-        margin-top: 125px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInSlideUp 0.8s ease-out forwards;
     }
 
-        .main-container h1 {
-            color: #1c3d5a;
-            font-weight: 600;
-            margin-bottom: 15px;
+    @@keyframes fadeInSlideUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        .main-container p {
-            color: #6c757d;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-        }
+    .main-container .welcome-icon {
+        font-size: 3.8rem;
+        color: var(--bank-accent); /* Dourado (do _Layout) */
+        margin-bottom: 25px;
+    }
 
-    /* 4. Estilo dos Botões de Ação (Abaixo do texto) */
+    .main-container h1 {
+        color: var(--bank-dark); /* Azul Escuro (do _Layout) */
+        font-weight: 700;
+        font-size: 3em;
+        margin-bottom: 15px;
+        letter-spacing: -0.5px;
+    }
+
+    .main-container p {
+        color: #556278;
+        font-size: 1.25em;
+        line-height: 1.6;
+        margin-bottom: 45px;
+        padding: 0 20px;
+    }
+
     .action-buttons {
         display: flex;
         justify-content: center;
-        gap: 20px; /* Adiciona um espaço entre os botões */
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
     }
 
-        /* Estilo para os botões que já vem do Bootstrap, mas podemos customizar */
-        .action-buttons .btn {
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
+    .btn {
+        padding: 15px 35px;
+        font-size: 1.1em;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn i.fa-solid {
+            margin-right: 10px;
+            font-size: 0.95em;
         }
 
-    /* Você pode manter as classes do Bootstrap ou criar suas próprias */
     .btn-primary {
-        background-color: #007bff;
+        background-color: var(--bank-primary); /* Azul de Ação */
         color: white;
-        border: none;
+        border-color: var(--bank-primary);
     }
 
         .btn-primary:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px); /* Efeito de elevação */
+            background-color: #0069d9;
+            border-color: #0062cc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.25);
         }
+
+    .btn-outline-primary {
+        background-color: transparent;
+        color: var(--bank-primary);
+        border: 2px solid var(--bank-primary);
+    }
+
+        .btn-outline-primary:hover {
+            background-color: var(--bank-primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.15);
+        }
+
+    /* Estilo para o link "User Experience" */
+    .btn-link-styled {
+        background-color: transparent;
+        color: var(--bank-dark);
+        border: none;
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+        .btn-link-styled:hover {
+            color: var(--bank-primary);
+        }
+
 </style>
 
-<div class="top-bar">
-    <div class="logo-text">TheRealBank</div>
-    <a class="btn-secondary-blue" href="#">Área do Cliente</a>
-</div>
+<div class="hero-section">
+    <div class="main-container">
 
-<div class="hero-content">
-    <h1>
-        Tenha inumeras <br />
-        possibilidades na <br />
-        vida com TheRealBank
-    </h1>
+        <i class="fa-solid fa-building-columns welcome-icon"></i>
 
-<div class="main-container">
-    <h1 class="display-4">Seja Bem-vindo ao TheRealBank</h1>
-    <p>O seu banco digital. Gerencie seus clientes de forma fácil e segura.</p>
+        <h1 class="display-4">Bem-vindo ao TheRealBank</h1>
 
-    <div class="action-buttons">
-        <a class="btn btn-primary" asp-page="/Customers/AddCliente">Cadastrar Novo Cliente</a>
-        <a class="btn btn-primary" href="/Customers/ExibirClientes">Ver Clientes</a>
-        <a class="btn btn-primary" href="/Experiencia/Layout">Ver a User Expirence </a>
+        <p>Sua plataforma completa para gerenciar clientes com eficiência, segurança e insights poderosos. Estamos aqui para impulsionar o seu sucesso financeiro.</p>
+
+        <div class="action-buttons">
+            <a class="btn btn-primary" asp-page="/Customers/AddCliente">
+                <i class="fa-solid fa-user-plus"></i>Cadastrar Novo Cliente
+            </a>
+            <a class="btn btn-outline-primary" asp-page="/Customers/ExibirClientes">
+                <i class="fa-solid fa-users"></i>Ver Clientes
+            </a>
+        </div>
+
+        <!-- Botão "User Experience" Restaurado -->
+        <div style="margin-top: 25px;">
+            <a class="btn-link-styled" asp-page="/Experiencia/Layout">Ver a User Experience</a>
+        </div>
+
     </div>
 </div>
- 
