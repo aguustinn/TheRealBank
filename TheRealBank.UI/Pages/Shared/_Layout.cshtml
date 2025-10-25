@@ -106,57 +106,34 @@
             color: var(--bank-primary);
         }
 
-        /* --- Footer (Já estava escuro, agora combina com o header) --- */
+        /* --- Footer (Ultra-Minimalista e Dark) --- */
         .footer-custom {
             background-color: var(--bank-dark);
-            color: #adb5bd;
-            padding: 50px 0 30px 0;
+            color: var(--text-light-on-dark);
+            padding: 15px 0; /* Menos padding para ser mais compacto */
             margin-top: auto;
+            text-align: center;
+            /* Remove a borda para total minimalismo e centraliza o texto */
+            border-top: 1px solid #34425A;
         }
 
             .footer-custom h5 {
                 color: white;
                 font-weight: 600;
-                margin-bottom: 20px;
+                margin-bottom: 0px; /* Remove margem */
+                font-size: 1rem;
             }
 
             .footer-custom p {
-                color: #adb5bd;
-                font-size: 0.9rem;
-            }
-
-            .footer-custom a {
-                color: #adb5bd;
-                text-decoration: none;
-                transition: color 0.2s ease;
-            }
-
-                .footer-custom a:hover {
-                    color: white;
-                    text-decoration: underline;
-                }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .social-icons a {
-            font-size: 1.5rem;
-            margin-right: 15px;
-            color: white;
-            transition: color 0.3s ease;
-        }
-
-            .social-icons a:hover {
-                color: var(--bank-primary);
+                color: var(--text-light-on-dark);
+                font-size: 0.8rem;
+                margin-bottom: 0px; /* Remove margem */
             }
 
         .footer-bottom {
-            border-top: 1px solid #34425A;
-            padding-top: 20px;
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.85rem;
+            /* Como o footer é ultra-minimalista, o bottom agora é o próprio footer */
+            padding-top: 5px; /* Pequeno padding entre slogan e copyright */
+            font-size: 0.75rem; /* Menor para o copyright */
         }
     </style>
 </head>
@@ -212,42 +189,14 @@
 
     <footer class="footer-custom">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="text-uppercase">TheRealBank</h5>
-                    <p>
-                        "A melhor do dinheiro."<br />
-                        Soluções financeiras digitais pensadas para você.
-                    </p>
-                </div>
-
-                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="text-uppercase">Links</h5>
-                    <ul class="list-unstyled footer-links">
-                        <li><a asp-page="/Index">Home</a></li>
-                        <li><a asp-page="/Customers/ExibirClientes">Clientes</a></li>
-                        <li><a asp-page="/Privacy">Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="text-uppercase">Siga-nos</h5>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-            </div>
+            <h5 class="text-uppercase">TheRealBank</h5>
+            <p>"A melhor do dinheiro."</p>
 
             <div class="footer-bottom">
-                &copy; @DateTime.Now.Year - TheRealBank - Todos os direitos reservados.
+                &copy; @DateTime.Now.Year - Todos os direitos reservados.
             </div>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
