@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SeuProjeto.Data;
 using TheRealBank.Repositories;
 using TheRealBank.Services;
 using TheRealBank.Contexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,29 @@ TheRealBank.Repositories.ExtensionMethods.AddDesignerRepositories(builder.Servic
 // Registra serviços de aplicação
 builder.Services.AddApplicationServices();
 
-builder.Services.AddRazorPages();
+// Razor Pages + Authorization conventions for Admin-only access
+builder.Services.AddRazorPages(options =>
+{
+    // Área do Cliente protegida: qualquer usuário autenticado
+    options.Conventions.AuthorizePage("/Experiencia/Layout");
+    // Pasta Customers só Admin (se quiser manter)
+    options.Conventions.AuthorizeFolder("/Customers", "AdminOnly");
+});
+
+// Auth Cookie + Policy de Admin
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/Autentifica/Auth";
+        o.AccessDeniedPath = "/Autentifica/AuthAdm";
+        o.Cookie.Name = "TheRealBank.Auth";
+    });
+
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
@@ -32,6 +54,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.Run();

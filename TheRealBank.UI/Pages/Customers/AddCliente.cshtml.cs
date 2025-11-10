@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 using TheRealBank.Services.Customers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace TheRealBank.UI.Pages.Customers
 {
@@ -12,26 +15,31 @@ namespace TheRealBank.UI.Pages.Customers
         [BindProperty]
         public Customer Cliente { get; set; }
 
-        public AddClienteModel(ICustomerService customerService)
-        {
-            _customerService = customerService;
-        }
+        public AddClienteModel(ICustomerService customerService) => _customerService = customerService;
 
         public void OnGet() { }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
 
             await _customerService.AddCustomerAsync(Cliente);
 
-            // CORREÇÃO:
-            // O nome do parâmetro no objeto anônimo (aqui, 'cpf')
-            // deve ser EXATAMENTE o mesmo nome do parâmetro na diretiva @page da página de destino.
-            return RedirectToPage("/Customers/MostrarCliente", new { cpf = Cliente.CPF });
+            // Após cadastro já autentica como usuário comum (Role=User)
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, Cliente.CPF ?? Cliente.Email ?? string.Empty),
+                new Claim(ClaimTypes.Name, Cliente.Nome ?? Cliente.Email ?? "Cliente"),
+                new Claim(ClaimTypes.Email, Cliente.Email ?? string.Empty),
+                new Claim(ClaimTypes.Role, "User")
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                new AuthenticationProperties { IsPersistent = true });
+
+            return RedirectToPage("/Experiencia/Layout");
         }
     }
 }

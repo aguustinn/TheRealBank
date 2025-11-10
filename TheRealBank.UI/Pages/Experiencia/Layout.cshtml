@@ -386,9 +386,19 @@
 
                 <section class="balance-card">
                     <p>Saldo da sua conta:</p>
-                    <h2 class="amount">
-                        @Model.Saldo.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
-                    </h2>
+
+                    @if (Model.ShowBalance)
+                    {
+                        <h2 class="amount">
+                            @Model.Saldo.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                        </h2>
+                    }
+                    else
+                    {
+                        <h2 class="amount" style="filter: blur(4px)">R$ ••••</h2>
+                        <p class="yield">Saldo visível apenas para usuário comum.</p>
+                    }
+
                     <p class="yield">Rendeu R$ 28,00 nos últimos 30 dias</p>
                 </section>
 

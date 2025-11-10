@@ -8,197 +8,53 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TheRealBank.UI.styles.css" asp-append-version="true" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
     <style>
-        :root {
-            --bank-primary: #007bff;
-            --bank-dark: #1a253c;
-            --body-bg: #f8f9fa;
-            --text-light-on-dark: #adb5bd;
+        :root { --bank-primary:#007bff; --bank-dark:#1a253c; --body-bg:#f8f9fa; --text-light-on-dark:#adb5bd; }
+        html,body{margin:0;padding:0;height:100%;}
+        body{font-family:'Poppins',sans-serif;background-color:var(--body-bg);display:flex;flex-direction:column;}
+        main{flex-grow:1;padding-bottom:40px;}
+        .navbar-custom{background-color:var(--bank-dark)!important;border-bottom:3px solid var(--bank-primary);padding-top:1rem;padding-bottom:1rem;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+        .navbar-brand{display:flex;align-items:center;font-weight:700;color:#fff!important;font-size:1.4rem;letter-spacing:-0.5px;}
+        .navbar-brand-icon{width:35px;height:35px;color:var(--bank-primary);margin-right:12px;}
+        .navbar-toggler{border:none;padding-right:0;}
+        .navbar-toggler:focus{box-shadow:none;}
+        .navbar-toggler-icon{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");}
+        .btn-menu-custom{font-weight:600;border:2px solid rgba(255,255,255,0.15);color:#fff;padding:.6rem 1.4rem;border-radius:12px;transition:all .3s cubic-bezier(.25,.8,.25,1);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.05);}
+        .btn-menu-custom:hover{border-color:var(--bank-primary);background:var(--bank-primary);color:#fff;box-shadow:0 5px 15px rgba(0,123,255,.4);transform:translateY(-2px);}
+        .btn-menu-custom i{transition:transform .4s ease;}
+        .btn-menu-custom:hover i{transform:rotate(90deg);}
+        .footer-custom{background-color:var(--bank-dark);color:var(--text-light-on-dark);padding:25px 0;margin-top:auto;text-align:center;border-top:1px solid rgba(255,255,255,0.05);}
+        .footer-custom h5{color:#fff;font-weight:700;margin-bottom:5px;font-size:1.1rem;letter-spacing:1px;}
+        .offcanvas-end{border-left:none;box-shadow:-10px 0 30px rgba(0,0,0,0.5);}
+        .offcanvas-header{border-bottom:1px solid rgba(255,255,255,0.1);padding:1.5rem;}
+        .offcanvas-title{font-weight:700;letter-spacing:-0.5px;}
+        .offcanvas-body{padding:1.5rem;}
+        /* NOVO: força layout em coluna ocupando altura completa para poder empurrar ações */
+        .offcanvas-body.layout-offcanvas-body{display:flex;flex-direction:column;min-height:100%;}
+        .offcanvas-dark-link{color:rgba(255,255,255,0.7);font-weight:500;padding:1rem;border-radius:10px;transition:all .2s ease;text-decoration:none;display:flex;align-items:center;font-size:1.1rem;margin-bottom:5px;}
+        .offcanvas-dark-link i{width:28px;margin-right:10px;color:var(--bank-primary);transition:transform .2s ease;}
+        .offcanvas-dark-link:hover{background:rgba(255,255,255,0.1);color:#fff;transform:translateX(5px);}
+        .offcanvas-dark-link:hover i{transform:scale(1.1);}
+        .btn-area-cliente{background:var(--bank-primary)!important;color:#fff!important;font-weight:700!important;text-transform:uppercase;letter-spacing:1px;padding:15px;border-radius:10px;border:none;width:100%;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 15px rgba(0,123,255,0.3);}
+        .btn-area-cliente:hover{background:#0069d9!important;box-shadow:0 6px 20px rgba(0,123,255,0.5);transform:translateY(-2px);}
+        /* bloco de ações do usuário reposicionado mais para baixo */
+        .user-actions{
+            margin-top:auto;      /* empurra para baixo */
+            margin-bottom:4.5rem; /* deixa um respiro acima do rodapé do offcanvas */
+            padding:1.25rem 1rem;
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:14px;
+            background:rgba(255,255,255,0.04);
+            backdrop-filter:blur(4px);
         }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--body-bg);
-            display: flex;
-            flex-direction: column;
-        }
-
-        main {
-            flex-grow: 1;
-            padding-bottom: 40px;
-        }
-
-        /* Header com mais cara de "app" */
-        .navbar-custom {
-            background-color: var(--bank-dark) !important;
-            border-bottom: 3px solid var(--bank-primary);
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2); /* Sombra mais proeminente */
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            font-weight: 700; /* Mais negrito na marca */
-            color: white !important;
-            font-size: 1.4rem;
-            letter-spacing: -0.5px;
-        }
-
-        .navbar-brand-icon {
-            width: 35px;
-            height: 35px;
-            color: var(--bank-primary);
-            margin-right: 12px;
-        }
-
-        /* --- NOVOS ESTILOS PARA O BOTÃO DE MENU --- */
-        .navbar-toggler {
-            border: none; /* Remove borda no mobile para ficar mais limpo */
-            padding-right: 0;
-        }
-
-            .navbar-toggler:focus {
-                box-shadow: none; /* Remove o outline azul padrão do clique */
-            }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-
-        /* Botão Desktop Customizado (Mais elegante) */
-        .btn-menu-custom {
-            font-weight: 600;
-            border: 2px solid rgba(255,255,255,0.15); /* Borda mais sutil e grossa */
-            color: #ffffff; /* Texto já começa branco para mais contraste */
-            padding: 0.6rem 1.4rem;
-            border-radius: 12px; /* Bordas mais arredondadas */
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação mais fluida */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: rgba(255,255,255,0.05); /* Fundo levemente translúcido */
-        }
-
-            .btn-menu-custom:hover {
-                border-color: var(--bank-primary);
-                background-color: var(--bank-primary);
-                color: #ffffff;
-                box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4); /* Glow azul elegante */
-                transform: translateY(-2px); /* Leve efeito de levitação */
-            }
-
-            .btn-menu-custom i {
-                transition: transform 0.4s ease;
-            }
-
-            .btn-menu-custom:hover i {
-                transform: rotate(90deg);
-            }
-
-        /* --- Footer --- */
-        .footer-custom {
-            background-color: var(--bank-dark);
-            color: var(--text-light-on-dark);
-            padding: 25px 0;
-            margin-top: auto;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-            .footer-custom h5 {
-                color: white;
-                font-weight: 700;
-                margin-bottom: 5px;
-                font-size: 1.1rem;
-                letter-spacing: 1px;
-            }
-
-        /* --- Offcanvas (Menu Lateral) --- */
-        .offcanvas-end {
-            border-left: none; /* Remove borda padrão */
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5); /* Sombra profunda vindo da direita */
-        }
-
-        .offcanvas-header {
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 1.5rem;
-        }
-
-        .offcanvas-title {
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .offcanvas-body {
-            padding: 1.5rem;
-        }
-
-        .offcanvas-dark-link {
-            color: rgba(255,255,255,0.7);
-            font-weight: 500;
-            padding: 1rem;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-            .offcanvas-dark-link i {
-                width: 28px;
-                margin-right: 10px;
-                color: var(--bank-primary); /* Ícones sempre azuis para destaque */
-                transition: transform 0.2s ease;
-            }
-
-            .offcanvas-dark-link:hover {
-                background-color: rgba(255,255,255,0.1);
-                color: #ffffff;
-                transform: translateX(5px); /* Move levemente para a direita no hover */
-            }
-
-                .offcanvas-dark-link:hover i {
-                    transform: scale(1.1); /* Ícone aumenta levemente */
-                }
-
-        /* BOTÃO ÁREA DO CLIENTE - MELHORADO PARA VISIBILIDADE */
-        .btn-area-cliente {
-            background-color: var(--bank-primary) !important; /* Força a cor azul vibrante */
-            color: #ffffff !important; /* Força texto BRANCO PURO */
-            font-weight: 700 !important; /* Texto bem grosso */
-            text-transform: uppercase; /* Letras maiúsculas para chamar atenção */
-            letter-spacing: 1px; /* Espaçamento entre letras */
-            padding: 15px; /* Botão maior */
-            border-radius: 10px;
-            border: none;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
-
-            .btn-area-cliente:hover {
-                background-color: #0069d9 !important; /* Azul um pouco mais escuro no hover */
-                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
-                transform: translateY(-2px);
-            }
+        .logout-btn{background:linear-gradient(90deg,#6c757d,#5a6268);border:none;color:#fff;font-weight:600;width:100%;padding:.65rem 1rem;border-radius:8px;display:flex;justify-content:center;align-items:center;gap:6px;transition:.25s;}
+        .logout-btn:hover{background:linear-gradient(90deg,#5a6268,#4e555b);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.25);}
+        .user-actions .label-auth{font-size:.75rem;letter-spacing:1px;font-weight:600;color:var(--text-light-on-dark);text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:6px;}
     </style>
 </head>
 <body>
@@ -233,33 +89,40 @@
                 <h5 class="offcanvas-title" id="mainOffcanvasLabel">Navegação</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body d-flex flex-column justify-content-between">
+            <div class="offcanvas-body layout-offcanvas-body" style="min-height: 100%;">
                 <nav class="nav flex-column">
-                    <a class="offcanvas-dark-link" asp-page="/Index">
-                        <i class="fa-solid fa-house"></i> Home
-                    </a>
-                    @* <a class="offcanvas-dark-link" asp-page="/Customers/ExibirClientes">
-                        <i class="fa-solid fa-users"></i> Ver Clientes
-                    </a> *@
-                    <a class="offcanvas-dark-link" asp-page="/Autentifica/Auth">
-                        <i class="fa-solid fa-user"></i> Entrar
-                    </a>
-                    <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente">
-                        <i class="fa-solid fa-user-plus"></i> Novo Cliente
-                    </a>
-                    <a class="offcanvas-dark-link" asp-page="/Privacy">
-                        <i class="fa-solid fa-shield-halved"></i> Privacidade
-                    </a>
+                    <a class="offcanvas-dark-link" asp-page="/Index"><i class="fa-solid fa-house"></i> Home</a>
+                    @if (!(User?.Identity?.IsAuthenticated ?? false))
+                    {
+                        <a class="offcanvas-dark-link" asp-page="/Autentifica/Auth"><i class="fa-solid fa-user"></i> Entrar</a>
+                    }
+                    <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente"><i class="fa-solid fa-user-plus"></i> Novo Cliente</a>
+                    <a class="offcanvas-dark-link" asp-page="/Privacy"><i class="fa-solid fa-shield-halved"></i> Privacidade</a>
+
+                    @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+                    {
+                        <a class="offcanvas-dark-link" asp-page="/Customers/ExibirClientes">
+                            <i class="fa-solid fa-users"></i> Ver Clientes
+                        </a>
+                    }
                 </nav>
-
-
-
-              @*   Arrumar isso para poder ver esse cliente quando tiver a parte de autenticação correta *@
-              @*   <div class="mt-4 mb-3">
-                    <a class="btn btn-area-cliente" href="/Experiencia/Layout">
-                        <i class="fa-solid fa-lock me-2"></i> Área do Cliente
-                    </a>
-                </div> *@
+                @* Qualquer usuário autenticado (Admin ou comum) vê Área do Cliente e Sair embaixo *@
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <div class="user-actions">
+                        <div class="label-auth"><i class="fa-solid fa-circle-user"></i> Sessão</div>
+                        <div class="mb-3">
+                            <a class="btn btn-area-cliente w-100" asp-page="/Experiencia/Layout">
+                                <i class="fa-solid fa-lock me-2"></i> Área do Cliente
+                            </a>
+                        </div>
+                        <form method="post" asp-page="/Autentifica/Auth" asp-page-handler="Logout">
+                            <button class="logout-btn" type="submit">
+                                <i class="fa-solid fa-right-from-bracket"></i> Sair
+                            </button>
+                        </form>
+                    </div>
+                }
             </div>
         </div>
     </header>

@@ -26,6 +26,9 @@ namespace TheRealBank.Entities
         public string Senha { get; set; } = default!;
 
         [Required]
+        public bool Auth { get; set; }
+
+        [Required]
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
     }
