@@ -380,13 +380,15 @@
 
             <main>
                 <section class="greeting">
-                    <h1>Boa tarde, Bernardo.</h1>
+                    <h1>Boa tarde, @Model.FirstName.</h1>
                     <button class="ver-extrato">Ver extrato</button>
                 </section>
 
                 <section class="balance-card">
                     <p>Saldo da sua conta:</p>
-                    <h2 class="amount" data-value="23765.00"></h2>
+                    <h2 class="amount">
+                        @Model.Saldo.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                    </h2>
                     <p class="yield">Rendeu R$ 28,00 nos últimos 30 dias</p>
                 </section>
 

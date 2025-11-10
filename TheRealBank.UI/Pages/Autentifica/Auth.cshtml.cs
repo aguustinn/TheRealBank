@@ -18,8 +18,6 @@ namespace TheRealBank.UI.Pages.Autentifica
         [BindProperty]
         public InputModel Input { get; set; } = new();
 
-        public string? SuccessMessage { get; private set; }
-
         // Classe para definir os campos do formulário
         public class InputModel
         {
@@ -52,7 +50,7 @@ namespace TheRealBank.UI.Pages.Autentifica
             // ==================================================================
 
             // Sucesso: redireciona para a página solicitada
-            return RedirectToPage("/Experiencia/Layout"); // equivalente a href="/Experiencia/Layout"
+            return RedirectToPage("/Experiencia/Layout", new { email = Input.Email }); // equivalente a href="/Experiencia/Layout"
             // Se preferir, use: return Redirect("/Experiencia/Layout");
         }
     }
