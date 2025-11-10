@@ -5,21 +5,18 @@
 }
 
 <style>
-    /* A cor AZUL CLARO base */
     :root {
-        --blue-main: #007bff; /* Um azul primário vibrante */
-        --blue-light: #4169E1; /* Um azul mais claro para destaque */
-        --blue-dark: #0056b3; /* Azul mais escuro para hover */
-        --text-color: #f7f7f7; /* Branco suave para o texto principal */
+        --blue-main: #007bff;
+        --blue-light: #4169E1;
+        --blue-dark: #0056b3;
+        --text-color: #f7f7f7;
     }
 
-    /* 1. Fundo com imagem da pasta wwwroot/Imagem + overlay gradiente */
     body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        /* primeiro o gradiente (overlay) depois a imagem - o gradiente ficará sobre a imagem */
         background-image: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.6)), url('@Url.Content("~/Imagem/Fundo2.jpg")');
         background-size: cover;
         background-position: center;
@@ -30,64 +27,22 @@
         position: relative;
     }
 
-    /* 2. Barra de Navegação Superior */
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        position: relative;
-        z-index: 10;
-    }
-
-    .logo-text {
-        font-size: 3.5em;
-        font-weight: 800;
-        letter-spacing: -2px;
-        /* Cor do logo em AZUL CLARO */
-        color: var(--blue-light);
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    }
-
-    /* Botão Secundário - Azul Claro */
-    .btn-secondary-blue {
-        background-color: var(--blue-light);
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        font-weight: bold;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background-color 0.3s ease;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-        .btn-secondary-blue:hover {
-            background-color: #008c9e; /* Um tom de ciano escuro */
-        }
-
-    /* 3. Conteúdo Principal (Texto e Botões) */
     .hero-content {
-        position: absolute;
-        bottom: 10%;
-        left: 5%;
-        max-width: 50%;
-        padding: 0 20px;
-        z-index: 11; /* acima do background */
+        position: relative;
+        margin-top: 60px; /* espaço abaixo da navbar do layout */
+        padding: 60px 20px 120px 20px;
+        max-width: 720px;
     }
 
-        .hero-content h1 {
-            font-size: 3.8em;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            color: var(--text-color);
-            text-shadow: 0 0 10px rgba(0,0,0,1);
-        }
+    .hero-content h1 {
+        font-size: 3.2em;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 25px;
+        color: var(--text-color);
+        text-shadow: 0 0 10px rgba(0,0,0,1);
+    }
 
-    /* 4. Estilo dos Botões de Ação (Abaixo do texto) */
     .action-buttons {
         display: flex;
         flex-direction: column;
@@ -95,56 +50,37 @@
         gap: 12px;
     }
 
-        .action-buttons a {
-            display: block;
-            padding: 15px 30px;
-            font-size: 17px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            border: none;
-            width: 100%;
-            max-width: 320px;
-            text-align: center;
-        }
+    .action-buttons a {
+        display: block;
+        padding: 15px 30px;
+        font-size: 17px;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: none;
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+    }
 
-    /* Botão Primário - Azul Principal */
     .btn-primary-custom {
-        background-color: var(--blue-main); /* Azul Primário */
+        background-color: var(--blue-main);
         color: white;
         box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
-        .btn-primary-custom:hover {
-            background-color: var(--blue-dark); /* Azul escuro no hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-        }
+    .btn-primary-custom:hover {
+        background-color: var(--blue-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    }
 </style>
 
-<div class="top-bar">
-    <div class="logo-text">TheRealBank</div>
-    <a class="btn-secondary-blue" href="#">Área do Cliente</a>
-</div>
-
-<div class="hero-content"> 
+<div class="hero-content">
     <h1>
         Tenha inúmeras <br />
         possibilidades na <br />
         vida com TheRealBank
     </h1>
-      @*   =======
-        <div class="main-container">
-            <img src="~/Imagem/Logo.png" asp-append-version="true" alt="TheRealBank" loading="lazy" style="height:100px; width:auto;" />
-            <h1 class="display-4">Seja Bem-vindo ao TheRealBank</h1>
-            <p>O seu banco digital. Gerencie seus clientes de forma fácil e segura.</p>
-
-            <div class="action-buttons">
-                <a class="btn btn-primary" asp-page="/Customers/AddCliente">Cadastrar Novo Cliente</a>
-                <a class="btn btn-primary" href="/Customers/ExibirClientes">Ver Clientes</a>
-                <a class="btn btn-primary" href="/Experiencia/Layout">Ver a User Expirence </a>
-                <a class="btn btn-primary" href="/Teste/TestWeb">Ver a User Expirence </a>
-                >>>>>>> 4890f4117747e43e8360cc4f6db6cbb4d131553b
-            </div>
-        </div> *@
+    @* Conteúdo adicional pode ser adicionado aqui *@
+</div>

@@ -15,12 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 
     <style>
-        /* --- Paleta de Cores Premium --- */
         :root {
-            --bank-primary: #007bff; /* Azul primário mais vibrante */
-            --bank-dark: #1a253c; /* Azul marinho escuro (Header/Footer) */
-            --body-bg: #f8f9fa; /* Cinza de fundo suave */
-            --text-light-on-dark: #adb5bd; /* Texto claro em fundos escuros */
+            --bank-primary: #007bff;
+            --bank-dark: #1a253c;
+            --body-bg: #f8f9fa;
+            --text-light-on-dark: #adb5bd;
         }
 
         html, body {
@@ -41,106 +40,171 @@
             padding-bottom: 40px;
         }
 
-        /* --- Header / Navbar Premium (Dark) --- */
+        /* Header com mais cara de "app" */
         .navbar-custom {
-            /* Fundo escuro para o header */
             background-color: var(--bank-dark) !important;
-            /* Linha de sotaque azul */
             border-bottom: 3px solid var(--bank-primary);
             padding-top: 1rem;
             padding-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra suave */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2); /* Sombra mais proeminente */
         }
 
         .navbar-brand {
             display: flex;
             align-items: center;
-            font-weight: 600;
-            /* Cor da marca alterada para branco */
+            font-weight: 700; /* Mais negrito na marca */
             color: white !important;
-            font-size: 1.25rem;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
         }
 
         .navbar-brand-icon {
-            width: 32px;
-            height: 32px;
-            /* Ícone da marca na cor primária */
+            width: 35px;
+            height: 35px;
             color: var(--bank-primary);
-            margin-right: 10px;
+            margin-right: 12px;
         }
 
-        /* Links da Navbar (em fundo escuro) */
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            /* Cor do link inativo */
-            color: var(--text-light-on-dark) !important;
-            transition: all 0.2s ease-in-out;
-            /* Borda inferior transparente para evitar "pulo" no hover */
-            border-bottom: 3px solid transparent;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            margin-left: 5px;
-            margin-right: 5px;
+        /* --- NOVOS ESTILOS PARA O BOTÃO DE MENU --- */
+        .navbar-toggler {
+            border: none; /* Remove borda no mobile para ficar mais limpo */
+            padding-right: 0;
         }
 
-            /* Efeito Hover/Active do Link */
-            .navbar-nav .nav-link:hover,
-            .navbar-nav .nav-link.active {
-                color: white !important; /* Cor ativa/hover */
-                border-bottom-color: var(--bank-primary); /* Borda de destaque */
+            .navbar-toggler:focus {
+                box-shadow: none; /* Remove o outline azul padrão do clique */
             }
 
-        /* Ícones da Navbar */
-        .nav-link i.fa-solid {
-            width: 20px;
-            text-align: center;
-            margin-right: 5px;
-            /* Cor do ícone inativo */
-            color: var(--text-light-on-dark);
-            transition: color 0.2s ease-in-out;
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        /* Cor do ícone no Hover/Active */
-        .nav-link:hover i.fa-solid,
-        .nav-link.active i.fa-solid {
-            color: var(--bank-primary);
+        /* Botão Desktop Customizado (Mais elegante) */
+        .btn-menu-custom {
+            font-weight: 600;
+            border: 2px solid rgba(255,255,255,0.15); /* Borda mais sutil e grossa */
+            color: #ffffff; /* Texto já começa branco para mais contraste */
+            padding: 0.6rem 1.4rem;
+            border-radius: 12px; /* Bordas mais arredondadas */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação mais fluida */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: rgba(255,255,255,0.05); /* Fundo levemente translúcido */
         }
 
-        /* --- Footer (Ultra-Minimalista e Dark) --- */
+            .btn-menu-custom:hover {
+                border-color: var(--bank-primary);
+                background-color: var(--bank-primary);
+                color: #ffffff;
+                box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4); /* Glow azul elegante */
+                transform: translateY(-2px); /* Leve efeito de levitação */
+            }
+
+            .btn-menu-custom i {
+                transition: transform 0.4s ease;
+            }
+
+            .btn-menu-custom:hover i {
+                transform: rotate(90deg);
+            }
+
+        /* --- Footer --- */
         .footer-custom {
             background-color: var(--bank-dark);
             color: var(--text-light-on-dark);
-            padding: 15px 0; /* Menos padding para ser mais compacto */
+            padding: 25px 0;
             margin-top: auto;
             text-align: center;
-            /* Remove a borda para total minimalismo e centraliza o texto */
-            border-top: 1px solid #34425A;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
             .footer-custom h5 {
                 color: white;
-                font-weight: 600;
-                margin-bottom: 0px; /* Remove margem */
-                font-size: 1rem;
+                font-weight: 700;
+                margin-bottom: 5px;
+                font-size: 1.1rem;
+                letter-spacing: 1px;
             }
 
-            .footer-custom p {
-                color: var(--text-light-on-dark);
-                font-size: 0.8rem;
-                margin-bottom: 0px; /* Remove margem */
-            }
-
-        .footer-bottom {
-            /* Como o footer é ultra-minimalista, o bottom agora é o próprio footer */
-            padding-top: 5px; /* Pequeno padding entre slogan e copyright */
-            font-size: 0.75rem; /* Menor para o copyright */
+        /* --- Offcanvas (Menu Lateral) --- */
+        .offcanvas-end {
+            border-left: none; /* Remove borda padrão */
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5); /* Sombra profunda vindo da direita */
         }
+
+        .offcanvas-header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+        }
+
+        .offcanvas-title {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .offcanvas-body {
+            padding: 1.5rem;
+        }
+
+        .offcanvas-dark-link {
+            color: rgba(255,255,255,0.7);
+            font-weight: 500;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+            .offcanvas-dark-link i {
+                width: 28px;
+                margin-right: 10px;
+                color: var(--bank-primary); /* Ícones sempre azuis para destaque */
+                transition: transform 0.2s ease;
+            }
+
+            .offcanvas-dark-link:hover {
+                background-color: rgba(255,255,255,0.1);
+                color: #ffffff;
+                transform: translateX(5px); /* Move levemente para a direita no hover */
+            }
+
+                .offcanvas-dark-link:hover i {
+                    transform: scale(1.1); /* Ícone aumenta levemente */
+                }
+
+        /* BOTÃO ÁREA DO CLIENTE - MELHORADO PARA VISIBILIDADE */
+        .btn-area-cliente {
+            background-color: var(--bank-primary) !important; /* Força a cor azul vibrante */
+            color: #ffffff !important; /* Força texto BRANCO PURO */
+            font-weight: 700 !important; /* Texto bem grosso */
+            text-transform: uppercase; /* Letras maiúsculas para chamar atenção */
+            letter-spacing: 1px; /* Espaçamento entre letras */
+            padding: 15px; /* Botão maior */
+            border-radius: 10px;
+            border: none;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+            .btn-area-cliente:hover {
+                background-color: #0069d9 !important; /* Azul um pouco mais escuro no hover */
+                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+                transform: translateY(-2px);
+            }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-custom">
-            <div class="container">
+            <div class="container-fluid px-4 px-lg-5 align-items-center">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
                     <svg class="navbar-brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 1L2 6v2h20V6L12 1zM4 9v10H2v2h20v-2h-2V9H4zm3 0h2v9H7V9zm4 0h2v9h-2V9zm4 0h2v9h-2V9z" />
@@ -148,51 +212,61 @@
                     TheRealBank
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler ms-auto d-sm-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainOffcanvas" aria-controls="mainOffcanvas" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Index">
-                                <i class="fa-solid fa-house"></i>Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Customers/ExibirClientes">
-                                <i class="fa-solid fa-users"></i>Ver Clientes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Customers/AddCliente">
-                                <i class="fa-solid fa-user-plus"></i>Novo Cliente
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Privacy">
-                                <i class="fa-solid fa-shield-halved"></i>Privacidade
-                            </a>
-                        </li>
-                    </ul>
+                <div class="d-none d-sm-flex ms-auto">
+                    <button type="button"
+                            class="btn btn-menu-custom"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#mainOffcanvas"
+                            aria-controls="mainOffcanvas">
+                        Menu <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </nav>
+
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mainOffcanvas" aria-labelledby="mainOffcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="mainOffcanvasLabel">Navegação</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column justify-content-between">
+                <nav class="nav flex-column">
+                    <a class="offcanvas-dark-link" asp-page="/Index">
+                        <i class="fa-solid fa-house"></i> Home
+                    </a>
+                    <a class="offcanvas-dark-link" asp-page="/Customers/ExibirClientes">
+                        <i class="fa-solid fa-users"></i> Ver Clientes
+                    </a>
+                    <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente">
+                        <i class="fa-solid fa-user-plus"></i> Novo Cliente
+                    </a>
+                    <a class="offcanvas-dark-link" asp-page="/Privacy">
+                        <i class="fa-solid fa-shield-halved"></i> Privacidade
+                    </a>
+                </nav>
+
+                <div class="mt-4 mb-3">
+                    <a class="btn btn-area-cliente" href="/Experiencia/Layout">
+                        <i class="fa-solid fa-lock me-2"></i> Área do Cliente
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
     <footer class="footer-custom">
         <div class="container">
             <h5 class="text-uppercase">TheRealBank</h5>
             <p>"Melhor q tigrinho."</p>
-
-            <div class="footer-bottom">
+            <div class="footer-bottom mt-3 opacity-50">
                 &copy; @DateTime.Now.Year - Todos os direitos reservados.
             </div>
         </div>
@@ -200,7 +274,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
