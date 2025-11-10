@@ -21,6 +21,9 @@ namespace TheRealBank.Repositories.Users
         public async Task<Customer?> GetByCpfAsync(string cpf, CancellationToken ct = default)
             => await db.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.CPF == cpf, ct);
 
+        public async Task<Customer?> GetByEmailAsync(string email, CancellationToken ct = default)
+            => await db.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.Email == email, ct);
+
         public async Task<List<Customer>> GetAllAsync(CancellationToken ct = default)
             => await db.Customers.AsNoTracking().OrderBy(c => c.Nome).ToListAsync(ct);
 

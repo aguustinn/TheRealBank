@@ -238,8 +238,11 @@
                     <a class="offcanvas-dark-link" asp-page="/Index">
                         <i class="fa-solid fa-house"></i> Home
                     </a>
-                    <a class="offcanvas-dark-link" asp-page="/Customers/ExibirClientes">
+                    @* <a class="offcanvas-dark-link" asp-page="/Customers/ExibirClientes">
                         <i class="fa-solid fa-users"></i> Ver Clientes
+                    </a> *@
+                    <a class="offcanvas-dark-link" asp-page="/Autentifica/Auth">
+                        <i class="fa-solid fa-user"></i> Entrar
                     </a>
                     <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente">
                         <i class="fa-solid fa-user-plus"></i> Novo Cliente
@@ -249,11 +252,14 @@
                     </a>
                 </nav>
 
-                <div class="mt-4 mb-3">
+
+
+              @*   Arrumar isso para poder ver esse cliente quando tiver a parte de autenticação correta *@
+              @*   <div class="mt-4 mb-3">
                     <a class="btn btn-area-cliente" href="/Experiencia/Layout">
                         <i class="fa-solid fa-lock me-2"></i> Área do Cliente
                     </a>
-                </div>
+                </div> *@
             </div>
         </div>
     </header>

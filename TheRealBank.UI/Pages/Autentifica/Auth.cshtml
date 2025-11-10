@@ -1,0 +1,169 @@
+﻿@page
+@model TheRealBank.UI.Pages.Autentifica.AuthModel
+@{
+    ViewData["Title"] = "Acessar Conta";
+}
+
+<style>
+    /* Centraliza o formulário na tela */
+    .auth-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Card de Login Premium */
+    .login-card {
+        background-color: var(--bank-dark);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .login-header h2 {
+            color: white;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .login-header p {
+            color: var(--text-light-on-dark);
+        }
+
+    .login-icon {
+        font-size: 50px;
+        color: var(--bank-primary);
+        margin-bottom: 15px;
+    }
+
+    /* --- NOVOS ESTILOS PARA INPUTS E LABELS --- */
+    .form-label-custom {
+        color: var(--text-light-on-dark);
+        font-weight: 500;
+        margin-bottom: 8px; /* Espaço entre o label e o input */
+        display: block; /* Garante que o label fique em sua própria linha */
+    }
+
+    .form-control-custom {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        padding: 12px 15px; /* Input mais alto e confortável */
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-custom:focus {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-color: var(--bank-primary) !important;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25) !important;
+        }
+
+    /* Ícone dentro do input (opcional, mas fica bonito) */
+    .input-group-text-custom {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-right: none;
+        color: var(--text-light-on-dark);
+    }
+
+    /* Botão de Login */
+    .btn-login {
+        background-color: var(--bank-primary);
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+        .btn-login:hover {
+            background-color: #0062cc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+    .auth-links {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+        .auth-links a {
+            color: var(--text-light-on-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+            .auth-links a:hover {
+                color: var(--bank-primary);
+            }
+</style>
+
+<div class="container auth-container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fa-solid fa-circle-user login-icon"></i>
+            <h2>Bem-vindo de volta</h2>
+            <p>Acesse sua conta TheRealBank</p>
+        </div>
+
+        @if (!ModelState.IsValid)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <strong>Atenção:</strong> Verifique os dados abaixo.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label-custom">
+                    <i class="fa-solid fa-envelope me-1"></i> Endereço de E-mail
+                </label>
+                <input asp-for="Input.Email" type="email" class="form-control form-control-custom" placeholder="seu@email.com" required>
+                <span asp-validation-for="Input.Email" class="text-danger small mt-1 d-block"></span>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between">
+                    <label asp-for="Input.Password" class="form-label-custom">
+                        <i class="fa-solid fa-lock me-1"></i> Sua Senha
+                    </label>
+                    <a href="#" style="font-size: 0.85rem; color: var(--bank-primary); text-decoration: none;">Esqueceu?</a>
+                </div>
+                <input asp-for="Input.Password" type="password" class="form-control form-control-custom" placeholder="••••••••" required>
+                <span asp-validation-for="Input.Password" class="text-danger small mt-1 d-block"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login">
+                Entrar <i class="fa-solid fa-arrow-right ms-2"></i>
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <span style="color: var(--text-light-on-dark);">Novo por aqui?</span>
+            <a asp-page="/Customers/AddCliente" style="color: var(--bank-primary); font-weight: 600; margin-left: 5px;">
+                Crie sua conta
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

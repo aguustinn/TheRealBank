@@ -17,6 +17,7 @@ namespace SeuProjeto.Data
         public string CPF { get; set; }
         public string Email { get; set; }
         public decimal Saldo { get; set; }
+        public string Senha { get; set; }
         public DateTime DataNascimento { get; set; }
     }
 }

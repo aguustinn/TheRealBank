@@ -1,6 +1,4 @@
-﻿// Customers/CustomerService.cs
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,6 +46,7 @@ namespace TheRealBank.Services.Customers
             entity.Email = clienteAtualizado.Email ?? entity.Email;
             entity.Saldo = clienteAtualizado.Saldo;
             entity.DataNascimento = clienteAtualizado.DataNascimento;
+            entity.Senha = clienteAtualizado.Senha ?? entity.Senha;
 
             await repo.UpdateAsync(entity);
         }
@@ -63,7 +62,9 @@ namespace TheRealBank.Services.Customers
             CPF = c.CPF ?? string.Empty,
             Email = c.Email ?? string.Empty,
             Saldo = c.Saldo,
-            DataNascimento = c.DataNascimento
+            DataNascimento = c.DataNascimento,
+            Senha = c.Senha ?? string.Empty
+
         };
 
         private static Customer MapToDto(Ent e) => new Customer
@@ -72,7 +73,8 @@ namespace TheRealBank.Services.Customers
             CPF = e.CPF,
             Email = e.Email,
             Saldo = e.Saldo,
-            DataNascimento = e.DataNascimento
+            DataNascimento = e.DataNascimento,
+            Senha= e.Senha
         };
     }
 }

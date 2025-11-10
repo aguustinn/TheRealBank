@@ -15,6 +15,7 @@ namespace TheRealBank.Services.Customers
         public string? CPF { get; set; }
         public string? Email { get; set; }
         public decimal Saldo { get; set; }
+        public string? Senha { get; set; }
 
         [Required(ErrorMessage = "A data de nascimento é obrigatória.")]
         [DataType(DataType.Date)] // Ajuda na validação e na renderização do input

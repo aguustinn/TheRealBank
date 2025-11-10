@@ -9,6 +9,7 @@ namespace TheRealBank.Repositories.Users
     {
         Task<Customer?> GetByIdAsync(int id, CancellationToken ct = default);
         Task<Customer?> GetByCpfAsync(string cpf, CancellationToken ct = default);
+        Task<Customer?> GetByEmailAsync(string email, CancellationToken ct = default); // NOVO
         Task<List<Customer>> GetAllAsync(CancellationToken ct = default);
         Task<Customer> AddAsync(Customer customer, CancellationToken ct = default);
         Task UpdateAsync(Customer customer, CancellationToken ct = default);

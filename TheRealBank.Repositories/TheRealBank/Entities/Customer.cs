@@ -22,6 +22,9 @@ namespace TheRealBank.Entities
         [Precision(18, 2)]
         public decimal Saldo { get; set; }
 
+        [Required, MaxLength(70)]
+        public string Senha { get; set; } = default!;
+
         [Required]
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
