@@ -47,6 +47,7 @@ namespace TheRealBank.Services.Customers
             entity.Saldo = clienteAtualizado.Saldo;
             entity.DataNascimento = clienteAtualizado.DataNascimento;
             entity.Senha = clienteAtualizado.Senha ?? entity.Senha;
+            entity.Auth = clienteAtualizado.Auth;
 
             await repo.UpdateAsync(entity);
         }
@@ -56,6 +57,24 @@ namespace TheRealBank.Services.Customers
             await repo.DeleteByCpfAsync(cpf);
         }
 
+        public async Task PromoteToAdminAsync(string cpf)
+        {
+            if (string.IsNullOrWhiteSpace(cpf)) return;
+            var entity = await repo.GetByCpfAsync(cpf);
+            if (entity is null || entity.Auth) return;
+            entity.Auth = true;
+            await repo.UpdateAsync(entity);
+        }
+
+        public async Task DemoteFromAdminAsync(string cpf)
+        {
+            if (string.IsNullOrWhiteSpace(cpf)) return;
+            var entity = await repo.GetByCpfAsync(cpf);
+            if (entity is null || !entity.Auth) return;
+            entity.Auth = false;
+            await repo.UpdateAsync(entity);
+        }
+
         private static Ent MapToEntity(Customer c) => new Ent
         {
             Nome = c.Nome ?? string.Empty,
@@ -63,8 +82,8 @@ namespace TheRealBank.Services.Customers
             Email = c.Email ?? string.Empty,
             Saldo = c.Saldo,
             DataNascimento = c.DataNascimento,
-            Senha = c.Senha ?? string.Empty
-
+            Senha = c.Senha ?? string.Empty,
+            Auth = c.Auth
         };
 
         private static Customer MapToDto(Ent e) => new Customer
@@ -74,7 +93,8 @@ namespace TheRealBank.Services.Customers
             Email = e.Email,
             Saldo = e.Saldo,
             DataNascimento = e.DataNascimento,
-            Senha= e.Senha
+            Senha = e.Senha,
+            Auth = e.Auth
         };
     }
 }

@@ -2,14 +2,14 @@
 @model TheRealBank.UI.Pages.Customers.ExibirClientesModel
 @{
     ViewData["Title"] = "Lista de Clientes";
-    Layout = "/Pages/Shared/_Layout.cshtml"; // Aponta para o layout correto na pasta Shared
+    Layout = "/Pages/Shared/_Layout.cshtml";
 }
-
 <style>
-    /* * Estilos para a página de listagem.
-         * Isso NÃO afeta o Index.cshtml.
-         * Usa as variáveis de cor (ex: --bank-dark, --bank-accent) do seu _Layout.cshtml.
-        */
+    /* estilos existentes mantidos */
+    .promote-btn {
+        font-weight: 600;
+    }
+
     .list-container {
         background-color: white;
         padding: 40px 50px;
@@ -105,7 +105,9 @@
         .action-buttons .btn i {
             margin-right: 5px; /* Espaço entre ícone e texto */
         }
-
+    .promote-btn { font-weight:600; }
+    .demote-btn  { font-weight:600; }
+    /* restante dos estilos existentes mantidos */
 </style>
 
 <div class="list-container">
@@ -127,6 +129,7 @@
                     <th>CPF</th>
                     <th>Email</th>
                     <th>Saldo</th>
+                    <th>Admin?</th>
                     <th>Opções</th>
                 </tr>
             </thead>
@@ -139,6 +142,16 @@
                         <td>@cliente.Email</td>
                         <td>@cliente.Saldo.ToString("C")</td>
                         <td>
+                            @if (cliente.Auth)
+                            {
+                                <span class="badge bg-success">Sim</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Não</span>
+                            }
+                        </td>
+                        <td>
                             <div class="action-buttons">
                                 <a class="btn btn-outline-primary btn-sm" asp-page="/Customers/EditarCliente" asp-route-cpf="@cliente.CPF">
                                     <i class="fa-solid fa-pencil"></i> Editar
@@ -146,6 +159,26 @@
                                 <a class="btn btn-outline-danger btn-sm" asp-page="/Customers/Excluir_Cliente" asp-route-cpf="@cliente.CPF">
                                     <i class="fa-solid fa-trash-can"></i> Excluir
                                 </a>
+
+                                @* Promover (se não for admin) *@
+                                @if (!cliente.Auth && User.IsInRole("Admin"))
+                                {
+                                    <form method="post" asp-page-handler="Promote" asp-route-cpf="@cliente.CPF" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-warning btn-sm promote-btn">
+                                            <i class="fa-solid fa-arrow-up"></i> Tornar Admin
+                                        </button>
+                                    </form>
+                                }
+
+                                @* Rebaixar (se for admin, outro usuário, e você é admin) *@
+                                @if (cliente.Auth && User.IsInRole("Admin") && cliente.Email != User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value)
+                                {
+                                    <form method="post" asp-page-handler="Demote" asp-route-cpf="@cliente.CPF" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm demote-btn">
+                                            <i class="fa-solid fa-arrow-down"></i> Remover Admin
+                                        </button>
+                                    </form>
+                                }
                             </div>
                         </td>
                     </tr>

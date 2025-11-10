@@ -10,9 +10,10 @@ namespace TheRealBank.Services.Customers
     {
         Task AddCustomerAsync(Customer newCustomer);
         Task<List<Customer>> GetCustomersAsync();
-
         Task<Customer> GetCustomerByCpfAsync(string cpf);
         Task DeleteAsync(string cpf);
         Task UpdateAsync(string cpf, Customer clienteAtualizado);
+        Task PromoteToAdminAsync(string cpf);
+        Task DemoteFromAdminAsync(string cpf);
     }
 }

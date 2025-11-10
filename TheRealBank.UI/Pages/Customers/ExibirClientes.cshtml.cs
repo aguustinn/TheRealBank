@@ -1,7 +1,7 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TheRealBank.Services.Customers;
+using System.Security.Claims; // adicionado
 
 namespace TheRealBank.UI.Pages.Customers
 {
@@ -9,7 +9,6 @@ namespace TheRealBank.UI.Pages.Customers
     {
         private readonly ICustomerService _customerService;
 
-        // Aqui trocamos para lista em vez de 1 cliente
         public List<Customer> Clientes { get; set; } = new();
 
         public ExibirClientesModel(ICustomerService customerService)
@@ -22,6 +21,27 @@ namespace TheRealBank.UI.Pages.Customers
             Clientes = await _customerService.GetCustomersAsync();
             return Page();
         }
-    }
 
+        // Handler para promover usuário a admin
+        public async Task<IActionResult> OnPostPromoteAsync(string cpf)
+        {
+            if (!User.IsInRole("Admin")) return Forbid();
+            if (!string.IsNullOrWhiteSpace(cpf))
+                await _customerService.PromoteToAdminAsync(cpf);
+
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostDemoteAsync(string cpf)
+        {
+            if (!User.IsInRole("Admin")) return Forbid();
+            var currentEmail = User.FindFirstValue(ClaimTypes.Email);
+            var target = await _customerService.GetCustomerByCpfAsync(cpf);
+            if (target is null) return RedirectToPage();
+            // Impede remover de si mesmo
+            if (target.Email == currentEmail) return RedirectToPage();
+            await _customerService.DemoteFromAdminAsync(cpf);
+            return RedirectToPage();
+        }
+    }
 }
