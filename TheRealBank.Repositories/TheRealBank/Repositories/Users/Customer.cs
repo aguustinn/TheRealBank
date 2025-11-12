@@ -30,6 +30,15 @@ namespace TheRealBank.Repositories.Users
         public async Task<Customer> AddAsync(Customer customer, CancellationToken ct = default)
         {
             if (customer is null) throw new ArgumentNullException(nameof(customer));
+
+            // Garantir email para gerar chave PIX
+            if (string.IsNullOrWhiteSpace(customer.Email))
+                throw new ArgumentException("Email obrigatório para gerar chave PIX.", nameof(customer.Email));
+
+            // Se não veio chave PIX, define como o próprio email
+            if (string.IsNullOrWhiteSpace(customer.KeyPix))
+                customer.KeyPix = customer.Email.Trim();
+
             db.Customers.Add(customer);
             await db.SaveChangesAsync(ct);
             return customer;
@@ -38,6 +47,11 @@ namespace TheRealBank.Repositories.Users
         public async Task UpdateAsync(Customer customer, CancellationToken ct = default)
         {
             if (customer is null) throw new ArgumentNullException(nameof(customer));
+
+            // Mantém regra: se chave estiver vazia em atualização, força email
+            if (string.IsNullOrWhiteSpace(customer.KeyPix) && !string.IsNullOrWhiteSpace(customer.Email))
+                customer.KeyPix = customer.Email.Trim();
+
             db.Customers.Update(customer);
             await db.SaveChangesAsync(ct);
         }
