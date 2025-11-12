@@ -11,28 +11,27 @@ namespace TheRealBank.Services.Customers
     {
         private readonly ICustomerRepository repo;
 
-        public CustomerService(ICustomerRepository repo)
-        {
-            this.repo = repo;
-        }
+        public CustomerService(ICustomerRepository repo) => this.repo = repo;
 
         public async Task<List<Customer>> GetCustomersAsync()
-        {
-            var list = await repo.GetAllAsync();
-            return list.Select(MapToDto).ToList();
-        }
+            => (await repo.GetAllAsync()).Select(MapToDto).ToList();
 
         public async Task AddCustomerAsync(Customer newCustomer)
         {
             if (newCustomer == null) throw new ArgumentNullException(nameof(newCustomer));
-            var entity = MapToEntity(newCustomer);
-            await repo.AddAsync(entity);
+            await repo.AddAsync(MapToEntity(newCustomer));
         }
 
         public async Task<Customer> GetCustomerByCpfAsync(string cpf)
         {
             var entity = await repo.GetByCpfAsync(cpf);
             return entity is null ? null! : MapToDto(entity);
+        }
+
+        public async Task<Customer?> GetCustomerByEmailAsync(string email)
+        {
+            var entity = await repo.GetByEmailAsync(email);
+            return entity is null ? null : MapToDto(entity);
         }
 
         public async Task UpdateAsync(string cpf, Customer clienteAtualizado)
@@ -48,18 +47,15 @@ namespace TheRealBank.Services.Customers
             entity.DataNascimento = clienteAtualizado.DataNascimento;
             entity.Senha = clienteAtualizado.Senha ?? entity.Senha;
             entity.Auth = clienteAtualizado.Auth;
+            entity.KeyPix = clienteAtualizado.KeyPix ?? entity.KeyPix;
 
             await repo.UpdateAsync(entity);
         }
 
-        public async Task DeleteAsync(string cpf)
-        {
-            await repo.DeleteByCpfAsync(cpf);
-        }
+        public async Task DeleteAsync(string cpf) => await repo.DeleteByCpfAsync(cpf);
 
         public async Task PromoteToAdminAsync(string cpf)
         {
-            if (string.IsNullOrWhiteSpace(cpf)) return;
             var entity = await repo.GetByCpfAsync(cpf);
             if (entity is null || entity.Auth) return;
             entity.Auth = true;
@@ -68,10 +64,17 @@ namespace TheRealBank.Services.Customers
 
         public async Task DemoteFromAdminAsync(string cpf)
         {
-            if (string.IsNullOrWhiteSpace(cpf)) return;
             var entity = await repo.GetByCpfAsync(cpf);
             if (entity is null || !entity.Auth) return;
             entity.Auth = false;
+            await repo.UpdateAsync(entity);
+        }
+
+        public async Task SetPixKeyAsync(string email, string keyPix)
+        {
+            var entity = await repo.GetByEmailAsync(email);
+            if (entity is null) return;
+            entity.KeyPix = keyPix;
             await repo.UpdateAsync(entity);
         }
 
@@ -83,7 +86,8 @@ namespace TheRealBank.Services.Customers
             Saldo = c.Saldo,
             DataNascimento = c.DataNascimento,
             Senha = c.Senha ?? string.Empty,
-            Auth = c.Auth
+            Auth = c.Auth,
+            KeyPix = c.KeyPix
         };
 
         private static Customer MapToDto(Ent e) => new Customer
@@ -94,7 +98,8 @@ namespace TheRealBank.Services.Customers
             Saldo = e.Saldo,
             DataNascimento = e.DataNascimento,
             Senha = e.Senha,
-            Auth = e.Auth
+            Auth = e.Auth,
+            KeyPix = e.KeyPix
         };
     }
 }

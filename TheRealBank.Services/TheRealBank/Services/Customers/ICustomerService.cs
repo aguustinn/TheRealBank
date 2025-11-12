@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace TheRealBank.Services.Customers
@@ -15,5 +12,9 @@ namespace TheRealBank.Services.Customers
         Task UpdateAsync(string cpf, Customer clienteAtualizado);
         Task PromoteToAdminAsync(string cpf);
         Task DemoteFromAdminAsync(string cpf);
+
+        // PIX support
+        Task<Customer?> GetCustomerByEmailAsync(string email);
+        Task SetPixKeyAsync(string email, string keyPix);
     }
 }

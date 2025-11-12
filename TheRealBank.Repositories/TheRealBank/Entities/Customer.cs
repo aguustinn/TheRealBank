@@ -28,8 +28,11 @@ namespace TheRealBank.Entities
         [Required]
         public bool Auth { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
+
+        // PIX key (email/cpf/random). Optional so existing data still works.
+        [MaxLength(200)]
+        public string? KeyPix { get; set; }
     }
 }

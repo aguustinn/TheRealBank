@@ -19,6 +19,7 @@ namespace SeuProjeto.Data
         public decimal Saldo { get; set; }
         public string Senha { get; set; }
         public bool Auth { get; set; }
+        public string KeyPix { get; set; }
         public DateTime DataNascimento { get; set; }
     }
 }

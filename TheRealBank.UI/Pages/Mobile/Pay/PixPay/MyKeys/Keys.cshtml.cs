@@ -1,76 +1,101 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Linq;
+using TheRealBank.Services.Customers;
 
 namespace TheRealBank.UI.Pages.Mobile.Pay
 {
-    // Modelo para simular uma Chave PIX
     public class PixKey
     {
-        public string Id { get; set; } // Um ID único para o radio button
-        public string Tipo { get; set; } // "CPF", "E-mail", "Celular", "Aleatória"
-        public string Valor { get; set; }
-        public string Icone { get; set; }
+        public string Id { get; set; } = default!;
+        public string Tipo { get; set; } = default!;
+        public string Valor { get; set; } = default!;
+        public string Icone { get; set; } = default!;
     }
 
     public class KeysModel : PageModel
     {
-        // Lista de chaves que o usuário possui
-        public List<PixKey> ChavesPix { get; set; }
+        private readonly ICustomerService _customers;
 
-        // Propriedade para receber a seleção do usuário
+        public KeysModel(ICustomerService customers) => _customers = customers;
+
+        public List<PixKey> ChavesPix { get; set; } = new();
+
         [BindProperty]
         [Required]
-        public string SelectedKeyId { get; set; }
+        public string SelectedKeyId { get; set; } = string.Empty; // "email" | "cpf" | "random"
 
-        public void OnGet()
+        // FIX: use async Task and the OnGetAsync pattern (never async void)
+        public async Task OnGetAsync()
         {
-            // Simula as chaves cadastradas
+            var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+            var customer = string.IsNullOrWhiteSpace(email) ? null : await _customers.GetCustomerByEmailAsync(email);
+
+            var maskedEmail = string.IsNullOrWhiteSpace(customer?.Email) ? "seu-email" : MaskEmail(customer!.Email!);
+            var maskedCpf = string.IsNullOrWhiteSpace(customer?.CPF) ? "***.***.***-**" : MaskCpf(customer!.CPF!);
+
             ChavesPix = new List<PixKey>
             {
-                new PixKey
-                {
-                    Id = "1",
-                    Tipo = "CPF",
-                    Valor = "***.123.456-**",
-                    Icone = "fas fa-user-lock"
-                },
-                new PixKey
-                {
-                    Id = "2",
-                    Tipo = "E-mail",
-                    Valor = "g******l@email.com",
-                    Icone = "fas fa-envelope"
-                },
-                new PixKey
-                {
-                    Id = "3",
-                    Tipo = "Chave Aleatória",
-                    Valor = "a1b2c3d4-e5f6-...",
-                    Icone = "fas fa-key"
-                }
+                new PixKey { Id = "email",  Tipo = "E-mail",          Valor = maskedEmail, Icone = "fas fa-envelope" },
+                new PixKey { Id = "cpf",    Tipo = "CPF",             Valor = maskedCpf,   Icone = "fas fa-id-card" },
+                new PixKey { Id = "random", Tipo = "Chave Aleatória", Valor = "Gerada na hora", Icone = "fas fa-key" }
             };
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                // Se nada foi selecionado, recarrega a página
-                OnGet();
+                await OnGetAsync(); // FIX: await the async loader
                 return Page();
             }
 
-            // LÓGICA DEPOIS DE SELECIONAR:
-            // O usuário selecionou a chave com ID = SelectedKeyId
-            // O próximo passo lógico é redirecionar para a página "Receber",
-            // passando a chave que ele escolheu.
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrWhiteSpace(email))
+                return RedirectToPage("/Autentifica/Auth");
 
-            // Exemplo:
-            // return RedirectToPage("/Mobile/Receber", new { chave = SelectedKeyId });
+            var customer = await _customers.GetCustomerByEmailAsync(email);
+            if (customer is null)
+            {
+                ModelState.AddModelError(string.Empty, "Usuário não encontrado.");
+                await OnGetAsync(); // FIX: await
+                return Page();
+            }
 
-            // Por enquanto, vamos apenas voltar para a Home
-            return RedirectToPage("/Experiencia/Layout");
+            var keyToSave = SelectedKeyId switch
+            {
+                "email"  => customer.Email!,
+                "cpf"    => customer.CPF!,
+                "random" => Guid.NewGuid().ToString("D"),
+                _        => string.Empty
+            };
+
+            if (string.IsNullOrWhiteSpace(keyToSave))
+            {
+                ModelState.AddModelError(string.Empty, "Seleção inválida.");
+                await OnGetAsync(); // FIX: await
+                return Page();
+            }
+
+            await _customers.SetPixKeyAsync(email, keyToSave);
+            return RedirectToPage("/Mobile/Pay/PixPay/Receber", new { chave = keyToSave });
+        }
+
+        private static string MaskEmail(string email)
+        {
+            var at = email.IndexOf('@');
+            if (at <= 1) return "***" + email;
+            var visible = email[..1];
+            return $"{visible}***{email[at..]}";
+        }
+
+        private static string MaskCpf(string cpf)
+        {
+            var digits = new string(cpf.Where(char.IsDigit).ToArray());
+            if (digits.Length != 11) return "***.***.***-**";
+            return $"{digits[..3]}.***.***-{digits[^2..]}";
         }
     }
 }
