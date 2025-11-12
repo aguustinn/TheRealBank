@@ -381,7 +381,9 @@
             <main>
                 <section class="greeting">
                     <h1>Boa tarde, @Model.FirstName.</h1>
+                    <a asp-page="/Mobile/Extrato">
                     <button class="ver-extrato">Ver extrato</button>
+                    </a>
                 </section>
 
                 <section class="balance-card">
@@ -428,11 +430,14 @@
                             <img src="https://logospng.org/download/visa/logo-visa-4096.png" alt="Visa Logo">
                         </div>
                     </div>
+                    <a asp-page="/Mobile/Fatura">
                     <div class="card-details">
                         <p>Fatura atual</p>
                         <h3 class="amount" data-value="1256.45"></h3>
                         <p>Limite disponível de R$ 8.987,00</p>
                     </div>
+
+                    </a>
                 </section>
 
                 <section class="transactions-section">
