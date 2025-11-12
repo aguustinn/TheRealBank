@@ -1,0 +1,366 @@
+﻿@page
+@model TheRealBank.UI.Pages.Mobile.Pay.KeysModel
+@{
+    ViewData["Title"] = "Minhas Chaves PIX";
+}
+
+<style>
+    /* CSS BASE DO SEU APLICATIVO (COPIADO) */
+    .experience {
+        --purple: #5e00a3;
+        --green: #00c66e;
+        --dark-gray: #333;
+        --medium-gray: #888;
+        --light-gray: #f0f2f5;
+        --white: #ffffff;
+        --border-color: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        padding: 16px 0;
+        min-height: calc(100vh - 56px);
+    }
+
+        .experience .mobile-frame {
+            width: 375px;
+            height: 812px;
+            background-color: var(--light-gray);
+            border-radius: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experience .screen {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .experience .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+            .experience .status-bar .icons i {
+                margin-left: 8px;
+            }
+
+        .experience .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+            .experience .app-header .back-button {
+                font-size: 20px;
+                color: var(--purple);
+                text-decoration: none;
+            }
+
+            .experience .app-header .header-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--dark-gray);
+                margin: 0;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+        .experience main {
+            padding: 0 20px;
+        }
+
+        .experience section {
+            margin-bottom: 20px;
+        }
+
+        /* Estilos de Lista (copiado do seu Layout.cshtml) */
+        .experience .option-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+            .experience .option-link .icon-text {
+                display: flex;
+                align-items: center;
+            }
+
+            .experience .option-link i {
+                color: var(--purple);
+                font-size: 20px;
+                margin-right: 15px;
+            }
+
+            .experience .option-link .arrow {
+                color: var(--medium-gray);
+            }
+
+        .experience .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .experience .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--medium-gray);
+        }
+
+            .experience .mobile-nav-item i {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .experience .mobile-nav-item span {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+        /* Botão Principal */
+        .experience .btn-primary-full {
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+
+            .experience .btn-primary-full:hover {
+                background-color: #4a0083;
+                box-shadow: 0 4px 12px rgba(94,0,163,0.3);
+                transform: translateY(-2px);
+            }
+
+        /* --- NOVOS ESTILOS PARA A PÁGINA DE CHAVES --- */
+
+        .experience .key-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+            .experience .key-card h3 {
+                font-size: 16px;
+                font-weight: 600;
+                margin-top: 0;
+                margin-bottom: 5px;
+                color: var(--dark-gray);
+            }
+
+            .experience .key-card p.instrucao {
+                font-size: 14px;
+                color: var(--medium-gray);
+                margin-bottom: 25px;
+            }
+
+        /* Estilo para os itens de chave selecionáveis */
+        .experience .key-selection-form .key-item-label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .experience .key-selection-form input[type="radio"] {
+            display: none; /* Esconde o radio button original */
+        }
+
+        .experience .key-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .experience .key-item-label:hover .key-item {
+            background-color: #fcfcff;
+            border-color: #c7a7e4;
+        }
+
+        .experience .key-icon {
+            color: var(--purple);
+            font-size: 20px;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .experience .key-info {
+            flex-grow: 1;
+        }
+
+            .experience .key-info .key-type {
+                display: block;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--dark-gray);
+            }
+
+            .experience .key-info .key-value {
+                display: block;
+                font-size: 12px;
+                color: var(--medium-gray);
+            }
+
+        /* Estilo do círculo do radio button customizado */
+        .experience .radio-selector {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 50%;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+            .experience .radio-selector::after {
+                content: '';
+                width: 14px;
+                height: 14px;
+                background-color: var(--white);
+                border-radius: 50%;
+                transition: all 0.2s ease;
+            }
+
+        /* Estilo do item QUANDO SELECIONADO */
+        .experience .key-selection-form input[type="radio"]:checked + .key-item {
+            border-color: var(--purple);
+            background-color: #f9f6ff; /* Fundo lilás bem claro */
+        }
+
+            .experience .key-selection-form input[type="radio"]:checked + .key-item .radio-selector {
+                border-color: var(--purple);
+            }
+
+                .experience .key-selection-form input[type="radio"]:checked + .key-item .radio-selector::after {
+                    background-color: var(--purple); /* Bolinha roxa */
+                }
+
+</style>
+
+<div class="experience">
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <span class="time">12:09</span>
+            <div class="icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="screen">
+            <header class="app-header">
+                <a asp-page="/Mobile/Pay/Pix" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="header-title">Minhas Chaves</h1>
+                <div style="width: 20px;"></div>
+            </header>
+
+            <main>
+                <section class="key-card">
+                    <h3>Escolher chave</h3>
+                    <p class="instrucao">Selecione a chave que você quer usar para receber este PIX.</p>
+
+                    <form method="post" class="key-selection-form">
+
+                        @foreach (var chave in Model.ChavesPix)
+                        {
+                            <label class="key-item-label">
+                                <input type="radio" asp-for="SelectedKeyId" value="@chave.Id" />
+
+                                <div class="key-item">
+                                    <div class="key-icon">
+                                        <i class="@chave.Icone"></i>
+                                    </div>
+                                    <div class="key-info">
+                                        <span class="key-type">@chave.Tipo</span>
+                                        <span class="key-value">@chave.Valor</span>
+                                    </div>
+                                    <div class="radio-selector"></div>
+                                </div>
+                            </label>
+                        }
+
+                        <button type="submit" class="btn-primary-full" style="margin-top: 20px;">
+                            Usar esta Chave <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="service-options">
+                    <a href="#" class="option-link">
+                        <div class="icon-text">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Cadastrar nova chave</span>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                </section>
+            </main>
+        </div>
+
+        <nav class="bottom-nav">
+            <a asp-page="/Experiencia/Layout" class="mobile-nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>Sua conta</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Investimentos</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+    </div>
+</div>
