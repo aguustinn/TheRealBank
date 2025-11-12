@@ -1,5 +1,5 @@
 ﻿@page
-@model TheRealBank.UI.Pages.Mobile.ReceberModel
+@model TheRealBank.UI.Pages.Mobile.Pay.PixPay.ReceberModel
 @{
     ViewData["Title"] = "Receber PIX";
 }
@@ -258,7 +258,8 @@
                     <p class="instrucao">Mostre este código para quem vai pagar.</p>
 
                     <div class="qr-code-display">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=@Model.UserChavePix" alt="Meu QR Code PIX" />
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=@Model.QrCodeData" 
+                             alt="QR Code PIX" />
                     </div>
 
                     <div class="user-info">
@@ -268,14 +269,14 @@
                 </section>
 
                 <section class="action-buttons">
-                    <a href="#" class="btn-primary-full">
-                        <i class="fas fa-dollar-sign me-2"></i> Definir Valor
+                    <a href="?valor=50.00" class="btn-primary-full">
+                        <i class="fas fa-dollar-sign me-2"></i> Definir Valor R$ 50,00
                     </a>
-                    <a href="#" class="btn-secondary-full">
-                        <i class="fas fa-copy me-2"></i> Copiar Código
+                    <a href="javascript:navigator.clipboard.writeText('@Model.UserChavePix')" class="btn-secondary-full">
+                        <i class="fas fa-copy me-2"></i> Copiar Chave
                     </a>
-                    <a href="#" class="btn-secondary-full">
-                        <i class="fas fa-share-alt me-2"></i> Compartilhar
+                    <a href="javascript:navigator.clipboard.writeText(decodeURIComponent('@Model.QrCodeData'))" class="btn-secondary-full">
+                        <i class="fas fa-share-alt me-2"></i> Copiar Payload
                     </a>
                 </section>
             </main>
