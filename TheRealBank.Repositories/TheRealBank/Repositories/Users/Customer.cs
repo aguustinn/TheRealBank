@@ -57,5 +57,45 @@ namespace TheRealBank.Repositories.Users
             db.Customers.Remove(entity);
             await db.SaveChangesAsync(ct);
         }
+
+        public async Task<Customer?> GetByPixKeyAsync(string keyPix, CancellationToken ct = default)
+            => await db.Customers.AsNoTracking().FirstOrDefaultAsync(c => c.KeyPix == keyPix, ct);
+
+        public async Task<TransferResult> TransferAsync(string senderEmail, string pixKey, decimal amount, string? description = null, CancellationToken ct = default)
+        {
+            if (amount <= 0m)
+                return new TransferResult(TransferStatus.InvalidAmount);
+
+            // Inicia transação para garantir atomicidade
+            await using var trx = await db.Database.BeginTransactionAsync(ct);
+
+            var sender = await db.Customers.FirstOrDefaultAsync(c => c.Email == senderEmail, ct);
+            if (sender is null)
+                return new TransferResult(TransferStatus.SenderNotFound);
+
+            // Localiza destinatário: prioridade chave PIX; fallback email/CPF
+            var receiver = await db.Customers.FirstOrDefaultAsync(
+                c => c.KeyPix == pixKey || c.Email == pixKey || c.CPF == pixKey,
+                ct);
+
+            if (receiver is null)
+                return new TransferResult(TransferStatus.ReceiverNotFound);
+
+            if (sender.Saldo < amount)
+                return new TransferResult(TransferStatus.InsufficientFunds, sender.Saldo);
+
+            // Debita / Credita
+            sender.Saldo -= amount;
+            receiver.Saldo += amount;
+
+            db.Customers.Update(sender);
+            db.Customers.Update(receiver);
+
+            await db.SaveChangesAsync(ct);
+            await trx.CommitAsync(ct);
+
+            // (Opcional: registrar histórico / log usando description)
+            return new TransferResult(TransferStatus.Success, sender.Saldo);
+        }
     }
 }

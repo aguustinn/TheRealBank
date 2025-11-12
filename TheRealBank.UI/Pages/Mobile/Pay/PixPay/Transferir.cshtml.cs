@@ -1,19 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using TheRealBank.Repositories.Users;
 
 namespace TheRealBank.UI.Pages.Mobile.Pay
 {
-    // Modelo para simular um contato
     public class ContatoFrequente
     {
-        public string Nome { get; set; }
-        public string Info { get; set; } // Ex: "CPF: ***.123.456-**"
-        public string Icone { get; set; } // Ex: "fa-solid fa-user"
+        public string Nome { get; set; } = string.Empty;
+        public string Info { get; set; } = string.Empty;
+        public string Icone { get; set; } = "fa-solid fa-user";
     }
 
     public class TransferirModel : PageModel
     {
+        private readonly ICustomerRepository _repo;
+
+        public TransferirModel(ICustomerRepository repo) => _repo = repo;
+
         [BindProperty]
         [Required(ErrorMessage = "O valor é obrigatório")]
         [Display(Name = "Valor")]
@@ -22,21 +27,30 @@ namespace TheRealBank.UI.Pages.Mobile.Pay
         [BindProperty]
         [Required(ErrorMessage = "A chave é obrigatória")]
         [Display(Name = "Chave PIX ou CPF/CNPJ")]
-        public string Chave { get; set; }
+        public string Chave { get; set; } = string.Empty;
 
         [BindProperty]
         [Display(Name = "Descrição (Opcional)")]
-        public string Descricao { get; set; }
+        public string Descricao { get; set; } = string.Empty;
 
         public decimal SaldoDisponivel { get; private set; }
-        public List<ContatoFrequente> Contatos { get; private set; }
+        public List<ContatoFrequente> Contatos { get; private set; } = new();
+        public string? MensagemErro { get; private set; }
+        public string? MensagemSucesso { get; private set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            // Puxa o saldo (estou usando o valor do seu print)
-            SaldoDisponivel = 1110473.88m;
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                var sender = await _repo.GetByEmailAsync(email);
+                SaldoDisponivel = sender?.Saldo ?? 0m;
+            }
+            else
+            {
+                SaldoDisponivel = 0m;
+            }
 
-            // Simula uma lista de contatos recentes
             Contatos = new List<ContatoFrequente>
             {
                 new ContatoFrequente { Nome = "Maria Silva", Info = "PIX: maria@email.com", Icone = "fa-solid fa-user" },
@@ -45,22 +59,41 @@ namespace TheRealBank.UI.Pages.Mobile.Pay
             };
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || Valor is null)
             {
-                // Se o formulário for inválido, recarrega os dados do OnGet
-                OnGet();
+                await OnGetAsync();
                 return Page();
             }
 
-            // Se o formulário for válido:
-            // 1. Verifique se o SaldoDisponivel é maior que o Valor
-            // 2. Valide a Chave PIX/Conta
-            // 3. Redirecione para uma página de Confirmação
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrWhiteSpace(email))
+                return RedirectToPage("/Autentifica/Auth");
 
-            // Por enquanto, vamos apenas redirecionar de volta para a Home
-            return RedirectToPage("/Experiencia/Layout");
+            var result = await _repo.TransferAsync(email, Chave.Trim(), Valor.Value, Descricao);
+
+            switch (result.Status)
+            {
+                case TransferStatus.InvalidAmount:
+                    MensagemErro = "Valor inválido.";
+                    break;
+                case TransferStatus.SenderNotFound:
+                    MensagemErro = "Sua conta não foi encontrada.";
+                    break;
+                case TransferStatus.ReceiverNotFound:
+                    MensagemErro = "Destinatário não encontrado pela chave informada.";
+                    break;
+                case TransferStatus.InsufficientFunds:
+                    MensagemErro = "Saldo insuficiente para esta transferência.";
+                    break;
+                case TransferStatus.Success:
+                    MensagemSucesso = $"Transferência realizada com sucesso. Novo saldo: {result.NewSenderBalance?.ToString("C")}";
+                    break;
+            }
+
+            await OnGetAsync(); // atualiza saldo e contatos
+            return Page();
         }
     }
 }
