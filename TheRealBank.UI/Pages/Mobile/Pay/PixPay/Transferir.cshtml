@@ -1,5 +1,384 @@
 ﻿@page
-@model TheRealBank.UI.Pages.Mobile.Pay.PixPay.TransferirModel
+@model TheRealBank.UI.Pages.Mobile.Pay.TransferirModel
 @{
+    ViewData["Title"] = "Transferir";
 }
-<p>teste do pix transferir</p>
+
+<style>
+    /* CSS BASE DO SEU APLICATIVO (COPIADO DO PIX E EXTRATO) */
+    .experience {
+        --purple: #5e00a3;
+        --green: #00c66e;
+        --dark-gray: #333;
+        --medium-gray: #888;
+        --light-gray: #f0f2f5;
+        --white: #ffffff;
+        --border-color: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        padding: 16px 0;
+        min-height: calc(100vh - 56px);
+    }
+
+        .experience .mobile-frame {
+            width: 375px;
+            height: 812px;
+            background-color: var(--light-gray);
+            border-radius: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experience .screen {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .experience .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+            .experience .status-bar .icons i {
+                margin-left: 8px;
+            }
+
+        .experience .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+            .experience .app-header .back-button {
+                font-size: 20px;
+                color: var(--purple);
+                text-decoration: none;
+            }
+
+            .experience .app-header .header-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--dark-gray);
+                margin: 0;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+        .experience main {
+            padding: 0 20px;
+        }
+
+        .experience section {
+            margin-bottom: 20px;
+        }
+
+        /* Estilos dos links (para contatos recentes) */
+        .experience .option-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+            .experience .option-link:hover {
+                transform: translateY(-2px);
+            }
+
+            .experience .option-link .icon-text {
+                display: flex;
+                align-items: center;
+            }
+
+            .experience .option-link .icon-text-info {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .experience .option-link i {
+                color: var(--purple);
+                font-size: 20px;
+                margin-right: 15px;
+                width: 20px; /* Alinha o texto */
+            }
+
+            .experience .option-link .arrow {
+                color: var(--medium-gray);
+            }
+
+            .experience .option-link .info-nome {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .experience .option-link .info-detalhe {
+                font-size: 12px;
+                color: var(--medium-gray);
+            }
+
+        .experience .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .experience .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--medium-gray);
+        }
+
+            .experience .mobile-nav-item.active {
+                color: var(--purple);
+            }
+
+            .experience .mobile-nav-item i {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .experience .mobile-nav-item span {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+        /* --- NOVOS ESTILOS PARA A PÁGINA DE TRANSFERÊNCIA --- */
+
+        .experience .balance-info {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            text-align: center;
+            padding: 5px 0 15px 0;
+        }
+
+            .experience .balance-info span {
+                font-weight: 700;
+                color: var(--green);
+            }
+
+        .experience .transfer-form-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+            .experience .transfer-form-card h3 {
+                font-size: 16px;
+                font-weight: 600;
+                margin-top: 0;
+                margin-bottom: 15px;
+                color: var(--dark-gray);
+            }
+
+        /* Estilo para o campo de VALOR (criativo) */
+        .experience .form-group-valor {
+            margin-bottom: 25px;
+        }
+
+            .experience .form-group-valor .valor-input {
+                font-size: 32px;
+                font-weight: 700;
+                color: var(--purple);
+                border: none;
+                border-bottom: 2px solid var(--purple);
+                width: 100%;
+                padding: 5px 0;
+                background: transparent;
+                text-align: center;
+            }
+
+                .experience .form-group-valor .valor-input:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+                /* Placeholder customizado */
+                .experience .form-group-valor .valor-input::placeholder {
+                    color: #c7a7e4; /* Lilás claro */
+                    font-weight: 600;
+                }
+
+        /* Estilo para campos de texto normais */
+        .experience .form-group {
+            margin-bottom: 20px;
+        }
+
+            .experience .form-group label {
+                font-weight: 600;
+                font-size: 12px;
+                color: var(--dark-gray);
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .experience .form-group .form-control {
+                width: 100%;
+                padding: 12px 15px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                background-color: var(--light-gray);
+                font-size: 14px;
+                font-weight: 500;
+                box-sizing: border-box;
+            }
+
+                .experience .form-group .form-control:focus {
+                    outline: none;
+                    border-color: var(--purple);
+                    background-color: var(--white);
+                    box-shadow: 0 0 0 2px rgba(94,0,163,0.2);
+                }
+
+        /* Botão Principal */
+        .experience .btn-primary-full {
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+
+            .experience .btn-primary-full:hover {
+                background-color: #4a0083; /* Roxo mais escuro */
+                box-shadow: 0 4px 12px rgba(94,0,163,0.3);
+                transform: translateY(-2px);
+            }
+
+        /* Título da seção de recentes */
+        .experience h3.section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+            margin-top: 30px;
+        }
+
+</style>
+
+<div class="experience">
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <span class="time">12:03</span>
+            <div class="icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="screen">
+            <header class="app-header">
+                <a asp-page="/Mobile/Pay/Pix" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="header-title">Transferir</h1>
+                <div style="width: 20px;"></div>
+            </header>
+
+            <main>
+                <section class="balance-info">
+                    Saldo disponível: <span>@Model.SaldoDisponivel.ToString("C")</span>
+                </section>
+
+                <section class="transfer-form-card">
+                    <form method="post">
+                        <div class="form-group-valor">
+                            <h3>Qual o valor?</h3>
+                            <input asp-for="Valor" type="number" step="0.01" class="valor-input" placeholder="R$ 0,00" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Chave">Para quem? (Chave PIX, CPF/CNPJ)</label>
+                            <input asp-for="Chave" class="form-control" placeholder="Digite a chave" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Descricao">Descrição (Opcional)</label>
+                            <input asp-for="Descricao" class="form-control" placeholder="Ex: Aluguel" />
+                        </div>
+
+                        <button type="submit" class="btn-primary-full">
+                            Continuar <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="recent-contacts">
+                    <h3 class="section-title">Transferir de novo</h3>
+
+                    @foreach (var contato in Model.Contatos)
+                    {
+                        <a href="#" class="option-link">
+                            <div class="icon-text">
+                                <i class="@contato.Icone"></i>
+                                <div class="icon-text-info">
+                                    <span class="info-nome">@contato.Nome</span>
+                                    <span class="info-detalhe">@contato.Info</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                    }
+
+                </section>
+            </main>
+        </div>
+
+        <nav class="bottom-nav">
+            <a asp-page="/Experiencia/Layout" class="mobile-nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>Sua conta</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Investimentos</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+    </div>
+</div>

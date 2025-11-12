@@ -1,5 +1,299 @@
 ﻿@page
-@model TheRealBank.UI.Pages.Mobile.Pay.PixPay.ReceberModel
+@model TheRealBank.UI.Pages.Mobile.ReceberModel
 @{
+    ViewData["Title"] = "Receber PIX";
 }
-<p>teste do pix receber</p>
+
+<style>
+    /* CSS BASE DO SEU APLICATIVO (COPIADO) */
+    .experience {
+        --purple: #5e00a3;
+        --green: #00c66e;
+        --dark-gray: #333;
+        --medium-gray: #888;
+        --light-gray: #f0f2f5;
+        --white: #ffffff;
+        --border-color: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        padding: 16px 0;
+        min-height: calc(100vh - 56px);
+    }
+
+        .experience .mobile-frame {
+            width: 375px;
+            height: 812px;
+            background-color: var(--light-gray);
+            border-radius: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experience .screen {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 80px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .experience .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+            .experience .status-bar .icons i {
+                margin-left: 8px;
+            }
+
+        .experience .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+            .experience .app-header .back-button {
+                font-size: 20px;
+                color: var(--purple);
+                text-decoration: none;
+            }
+
+            .experience .app-header .header-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--dark-gray);
+                margin: 0;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+        .experience main {
+            padding: 0 20px;
+        }
+
+        .experience section {
+            margin-bottom: 20px;
+        }
+
+        .experience .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .experience .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--medium-gray);
+        }
+
+            .experience .mobile-nav-item.active {
+                color: var(--purple);
+            }
+
+            .experience .mobile-nav-item i {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .experience .mobile-nav-item span {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+        /* --- NOVOS ESTILOS PARA A PÁGINA RECEBER --- */
+
+        .experience .receive-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+            .experience .receive-card h3 {
+                font-size: 16px;
+                font-weight: 600;
+                margin-top: 0;
+                margin-bottom: 10px;
+                color: var(--dark-gray);
+            }
+
+            .experience .receive-card p.instrucao {
+                font-size: 14px;
+                color: var(--medium-gray);
+                margin-bottom: 20px;
+            }
+
+        .experience .qr-code-display {
+            padding: 15px;
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-width: 250px;
+            height: 250px;
+            margin: 15px auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .experience .qr-code-display img {
+                width: 100%;
+                height: 100%;
+            }
+
+        .experience .user-info {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+            .experience .user-info h4 {
+                font-size: 16px;
+                font-weight: 700;
+                color: var(--dark-gray);
+                margin: 0 0 5px 0;
+            }
+
+            .experience .user-info p {
+                font-size: 14px;
+                color: var(--medium-gray);
+                margin: 0;
+                font-weight: 500;
+            }
+
+        .experience .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .experience .btn-primary-full, .experience .btn-secondary-full {
+            background-color: var(--purple);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center; /* Para o <a> */
+        }
+
+            .experience .btn-primary-full:hover {
+                background-color: #4a0083;
+                box-shadow: 0 4px 12px rgba(94,0,163,0.3);
+                transform: translateY(-2px);
+            }
+
+        .experience .btn-secondary-full {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border: 1px solid var(--border-color);
+        }
+
+            .experience .btn-secondary-full:hover {
+                background-color: #e2e6ea;
+                transform: translateY(-2px);
+            }
+
+</style>
+
+<div class="experience">
+    <div class="mobile-frame">
+        <div class="status-bar">
+            <span class="time">12:05</span>
+            <div class="icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <div class="screen">
+            <header class="app-header">
+                <a asp-page="/Mobile/Pay/Pix" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <h1 class="header-title">Receber PIX</h1>
+                <div style="width: 20px;"></div>
+            </header>
+
+            <main>
+                <section class="receive-card">
+                    <h3>Receber via PIX</h3>
+                    <p class="instrucao">Mostre este código para quem vai pagar.</p>
+
+                    <div class="qr-code-display">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=@Model.UserChavePix" alt="Meu QR Code PIX" />
+                    </div>
+
+                    <div class="user-info">
+                        <h4>@Model.UserNome</h4>
+                        <p>Chave: @Model.UserChavePixMascarada</p>
+                    </div>
+                </section>
+
+                <section class="action-buttons">
+                    <a href="#" class="btn-primary-full">
+                        <i class="fas fa-dollar-sign me-2"></i> Definir Valor
+                    </a>
+                    <a href="#" class="btn-secondary-full">
+                        <i class="fas fa-copy me-2"></i> Copiar Código
+                    </a>
+                    <a href="#" class="btn-secondary-full">
+                        <i class="fas fa-share-alt me-2"></i> Compartilhar
+                    </a>
+                </section>
+            </main>
+        </div>
+
+        <nav class="bottom-nav">
+            <a asp-page="/Experiencia/Layout" class="mobile-nav-item">
+                <i class="fas fa-user-circle"></i>
+                <span>Sua conta</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Investimentos</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+    </div>
+</div>
