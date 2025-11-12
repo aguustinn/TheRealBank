@@ -92,11 +92,13 @@
             <div class="offcanvas-body layout-offcanvas-body" style="min-height: 100%;">
                 <nav class="nav flex-column">
                     <a class="offcanvas-dark-link" asp-page="/Index"><i class="fa-solid fa-house"></i> Home</a>
+
                     @if (!(User?.Identity?.IsAuthenticated ?? false))
                     {
                         <a class="offcanvas-dark-link" asp-page="/Autentifica/Auth"><i class="fa-solid fa-user"></i> Entrar</a>
+                        <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente"><i class="fa-solid fa-user-plus"></i> Novo Cliente</a>
                     }
-                    <a class="offcanvas-dark-link" asp-page="/Customers/AddCliente"><i class="fa-solid fa-user-plus"></i> Novo Cliente</a>
+
                     <a class="offcanvas-dark-link" asp-page="/Privacy"><i class="fa-solid fa-shield-halved"></i> Privacidade</a>
 
                     @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))

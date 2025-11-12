@@ -15,10 +15,14 @@ builder.Services.AddApplicationServices();
 // Razor Pages + Authorization conventions for Admin-only access
 builder.Services.AddRazorPages(options =>
 {
-    // Área do Cliente protegida: qualquer usuário autenticado
+    // Área do Cliente: somente autenticados
     options.Conventions.AuthorizePage("/Experiencia/Layout");
-    // Pasta Customers só Admin (se quiser manter)
+
+    // Pasta Customers: somente Admin por padrão
     options.Conventions.AuthorizeFolder("/Customers", "AdminOnly");
+
+    // EXCEÇÃO: liberar AddCliente para qualquer um (anônimo)
+    options.Conventions.AllowAnonymousToPage("/Customers/AddCliente");
 });
 
 // Auth Cookie + Policy de Admin
