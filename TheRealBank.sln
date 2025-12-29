@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.UI", "TheRealBank.UI\TheRealBank.UI.csproj", "{1D14DA2B-729F-4BCB-8823-515713110217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.Services", "TheRealBank.Services\TheRealBank.Services.csproj", "{49EE8ADC-793E-4D3E-9F9F-7304C50D8F57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheRealBank.Repositories", "TheRealBank.Repositories\TheRealBank.Repositories.csproj", "{5FC36A91-0252-47F7-A924-38C586906326}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BB48DD0D-2E66-4DCD-977E-29A9B2C01567}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
